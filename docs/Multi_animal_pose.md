@@ -99,7 +99,13 @@ Go to [Scenario 1 - Creating a classifier from scratch](https://github.com/sgold
 
 Go to [Scenario 2 - Using a classifier on new experimental data](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario2.md) for tutorials on how to analyze the imported data using previously generated classifiers. 
 
-Go to [Scenario 2 - Using a classifier on new experimental data](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario2.md) for tutorials on how to analyze the imported data using previously generated classifiers. 
+Go to [Scenario 3 - Updating a classifier with further annotated data](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario2.md) for tutorials on how to use the imported data to update previously created classifiers.
+
+
+
+
+
+
 
 
 
