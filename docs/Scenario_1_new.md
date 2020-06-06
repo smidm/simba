@@ -146,7 +146,7 @@ In this step, you can choose to import more pose estimation data and/or more vid
 
 5. If you would like to *remove* a previously defined classifier from the current project, click on `Choose a classifier to remove` in the `Remove existing classifiers(s)` submenu. Once clicked, a window will appear with a dropdown menu where you select the classifier you wish to remove from the current project. 
 
-6. Once you have analyzed your videos, and/or used videos to create classifiers in SimBA  (see [Scenario 4](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario4.md#part-2-load-the-project-and-import-your-new-data)), you may want to archive your analyzed files. Use the `Archive processed files` menu to enter a folder name for your analyzed files and click on `Archive` to move your analyzed files into this folder. 
+6. Once you have analyzed your videos, and/or used videos to create classifiers in SimBA  (see [Scenario 4](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario4.md#part-2-load-the-project-and-import-your-new-data)), you may want to archive your analyzed files to prevent them from being analyzed by SimBA again. Use the `Archive processed files` menu to enter a folder name for your analyzed files and click on `Archive` to move your analyzed files into this folder. 
 
 ### Step 3: Set video parameters
 In this step, you can customize the meta parameters for each of your videos (fps, resolution, metric distances) and provide additional custom video information (Animal ID, group etc). This can be very helpful when analyzing data later on. Are there any groups, conditions, days, treatments, etc, that will make your analysis easier? Note that if youd like to change any of these parameters, you can do so with the SimBA [video pre-processing tools](https://github.com/sgoldenlab/simba/blob/master/docs/tutorial_process_videos.md). Note that the video pre-processing should be performed prior to analyzing the videos through DeepLabCut, SLEAP, or DeepPoseKit. 
@@ -227,7 +227,7 @@ Body parts flagged as movement or location outliers will be re-placed in their l
 
 5. Click to run the outlier correction. You can follow the progress in the main SimBA window. Once complete, two new CSV log files will appear in the `/project_folder/log` folder. These two files contain the number of body parts corrected following the two outlier correction methods for each video in the project. The files will look similar to the worksheets in [this Microsoft Excel file](https://github.com/sgoldenlab/simba/blob/master/misc/Outlier_corrections.xlsx). 
 
-> *Note:* In some scenarios, SimBA users are confident that the pose-estimation is perfected, no gross innacuracies are present, and the user may want to completely skip the use of SimBAs outlier correction tools. To do this, click on the red `Skip outlier correction (CAUTION)` button. This will format the 
+> *Note:* In some scenarios, SimBA users are confident that the pose-estimation is perfected, no gross innacuracies are present, and the user may want to completely skip the use of SimBAs outlier correction tools. To do this, click on the red `Skip outlier correction (CAUTION)` button. Clicking on this button will format your CSV files and make them compatible with subsequent procedures (see below) without removing any outliers from you tracking data. 
 
 
 ### Step 5: Extract Features
@@ -254,9 +254,15 @@ This step is used to label the behaviors in each frames of a video. This data wi
 
 If you already have annotation videos created with these alternative tools, or any other behavioral annotator, and would like to use them to create predictive classifiers, please let us know as we would like to write scripts that could process these data for SimBA. If you have created such scripts yourself, please consider contributing them to the community!
 
-**Important**: The behavioral labelling is a very critical step. A computer will only learn what you teach it, so if your annotations are not correct then the classifiers will fail. **SimBA uses every single frame**, and therefore the "start" and "stop" frames for a given behavior are very important. Please take the time to create clear and well-defined operationalized definitions of the complete behavior, including start and stop frames. As an example, here are machine learning operationalized definitions of [mouse](https://github.com/sgoldenlab/simba/blob/master/misc/Operational_definitions_mouse_resident_intruder.pdf) and [rat](https://github.com/sgoldenlab/simba/blob/master/misc/Operational_definitions_rat_resident_intruder.pdf) predictive classifiers for aggressive behaviors in resident-intruder protocols.  
+**Important**: The behavioral labelling is a very critical step. A computer will only learn what you teach it, so if your annotations are not correct then the classifiers will fail. **SimBA uses every single frame**, and therefore the "start" and "stop" frames for a given behavior are very important. Please take the time to create clear and well-defined operationalized definitions of the complete behavior, including start and stop frames. As an example, here are machine learning operationalized definitions of [mouse](https://github.com/sgoldenlab/simba/blob/master/misc/Operational_definitions_mouse_resident_intruder.pdf) and [rat](https://github.com/sgoldenlab/simba/blob/master/misc/Operational_definitions_rat_resident_intruder.pdf) predictive classifiers for aggressive behaviors in resident-intruder protocols.
 
-1. Click on `Select folder with frames`. In your project folder navigate to the `/project_folder/frames/input/` folder, and you should see folders that are named after your videos. These folders contain the extracted video frames. Select one of the folder and the following window should pop up. To revisit the tutorial on how to extract the frames for your project, click [here](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario1.md#step-4-extract-frames-into-project-folder). 
+1. Click on the `Label Behavior` tab in the `Load Project` window and you should see the following menu:
+
+![](/images/Create_project_11.jpg "project11_dup.PNG")
+
+Use the first button (i) in the image above if you are starting to create behavior labels for a video from scratch. Use the second button (ii) to continoue annotating a video that you have made behavior labels for previously in the current project. In the third menu (iii) we have button-click access to functions that append behavior labels generated in third-party apps to your SimBA dataset.   
+
+1. In the current scenario, we want to click on the first button - `Select folder with frames (Create new video annotation)`. In your project folder navigate to the `/project_folder/frames/input/` folder, and you should see folders that are named after your videos. These folders contain the extracted video frames that we created in [Step 4](https://github.com/sgoldenlab/simba/blob/SimBA_no_TF/docs/Scenario_1_new.md#step-4-outlier-correction) of this current tutorial. Select one of the folder and the following window should pop up. To revisit the tutorial on how to extract the frames for your project, click [here](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario1.md#step-4-extract-frames-into-project-folder). 
 
 <p align="center">
   <img width="720" height="720" src="https://github.com/sgoldenlab/simba/blob/master/images/labelbe.PNG">
@@ -264,7 +270,9 @@ If you already have annotation videos created with these alternative tools, or a
 
 2. Please click [here](/docs/labelling_aggression_tutorial.md) to learn how to use the behavior annotation interface.
 
-3. Once finished, click on `Generate/Save` and it will generate a new CSV file in */csv/targets_inserted* folder. Repeat this step for all the files you wish you use to generate the predictive classifier for behavior BtWGaNP. 
+3. Once finished, click on `Generate/Save` and it will generate a new CSV file in */csv/targets_inserted* folder. Repeat this step for all the files you wish you use to generate the predictive classifier for behavior BtWGaNP.
+
+>*Note:* If you used SimBAs behavior label annotation interface to create behavior labels for the first half of your video, and now you want create labels for the second half of a video, then you can do so by clicking on the second button in the `Label Behavior` menu titled `Select folder with frames (Continue with existing video annotation)`. After clicking on this button, follow the same steps as when creating a new annotations. The difference with clicking on this button will be that when the SimBA behavior label interface shows up, it will show up from the last saved frame with your previous annotations for this file in memory. 
 
 ### Step 7: Train Machine Model
 This step is used for training new machine models for behavioral classifications. There are a large number of machine learning parameters, called Hyperparameters, that influence Random Forest models. We have currated a list of Hyperparameters and made it easy to tweak, and validate, their values. For more in-depth technical explanations, please see [sklearn.ensemble.RandomForestClassifier documentation](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) or join the discussion on our [Gitter page](https://gitter.im/SimBA-Resource/community). We have also made it possible to import these settings, in order to make the setting of these Hyperparameters as painless as possible (see below). This is a lot to look at, please read this whole section before starting anything.
@@ -295,15 +303,15 @@ This step is used for training new machine models for behavioral classifications
 
 Here is a brief description of the different Hyperparameter settings, together with some further links to where you can read more about them. 
 
-- `RF N estimators`: Number of decision trees in the decision ensemble.
+- `RF N estimators`: Number of decision trees in the decision ensemble (e.g., 2000).
 
-- `RF Max features`: Number of features to consider when looking for the best split. 
+- `RF Max features`: Number of features to consider when looking for the best split (e.g., enter *sqrt* to take the square root of the total number of features in your dataset when evaluating a split).
 
-- `RF Criterion`: The metric used to measure the quality of each split ("gini" or "entropy").
+- `RF Criterion`: The metric used to measure the quality of each split (e.g., *gini* or *entropy*).
 
 - `Train Test Size`: The ratio of the dataset withheld for testing the model (e.g., 0.20).
 
-- `RF Min sample leaf`: The minimum number of samples required to be at a leaf node. 
+- `RF Min sample leaf`: The minimum number of samples required to be at a leaf node (e.g., *1*, or increase to [prevent over-fitting](https://elitedatascience.com/overfitting-in-machine-learning)). 
 
 - `Under sample setting`: "Random undersample" or "None". If "Random undersample", a random sample of the majority class will be used in the train set. The size of this sample will be taken as a ratio of the minority class and should be specified in the "under sample ratio" box below. For more information, click [here](https://imbalanced-learn.readthedocs.io/en/stable/generated/imblearn.under_sampling.RandomUnderSampler.html). This setting address issues that arise from "imbalanced" data sets, where the behavior that is predicted is very sparse. **Note:** *Class* means the classification that a video frame belongs to. In this Scenario it is either (i) Not BtWGaNP, or (ii) BtWGaNP. The majority class is the class that contains the most examples, which - most certaily - in any use case of SimBA,will be *Not BtWGaNP*. Conversely, the minority class is the class that contains the least examples, which will be *BtWGaNP*.    
 
