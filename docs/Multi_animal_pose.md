@@ -83,7 +83,20 @@ When you press `c`, you will be shown this new message asking you to double left
 
 ![](/images/Multi_animal6.jpg "createproject")
 
-Once you have clicked on all the animals in your project. You will be asked if you are happy with your assigned identities. If you are not , press `x` to start re-assigning the animal identities. If you are happy with 
+Once you have clicked on all the animals in your project. You will be asked if you are happy with your assigned identities. If you are not happy with your assigned identities, press `x` to start re-assigning the animal identities. If you are happy with your assigned identities,  press `c` to save your organised file in CSV file format. SimBA will loop over all the videos and H5 files in your project asking you to assign the identities of the animals in each file. 
+
+The process for each video should look like in the following gif:
+
+![](/images/multiVid.gif "createproject")
+
+>*Note*: The back-end process of converting SLEAP H5 tracks into CSV is a little more time-consuming for SimBA than converting DLC tracks, so if you are shifting from DeepLabCut to SLEAP, and the process takes a little longer than what you are used to, then don't be alarmed! 
+
+
+
+
+
+
+
 
 
 
