@@ -89,7 +89,21 @@ The process for each video should look like in the following gif:
 
 ![](/images/multiVid.gif "createproject")
 
->*Note*: The back-end process of converting SLEAP H5 tracks into CSV is a little more time-consuming for SimBA than converting DLC tracks, so if you are shifting from DeepLabCut to SLEAP, and the process takes a little longer than what you are used to, then don't be alarmed! 
+>*Note*: The back-end process of converting and organising SLEAP H5 tracks into CSV is a little more time-consuming for SimBA than converting DLC tracks, so if you are shifting from DeepLabCut to SLEAP, and the process takes a little longer than what you are used to, then don't be alarmed! 
+
+2. When you have attributed the animal IDs for all of the videos of your project, you can navigate to your project folder to check that all CSV files have been generated as expected. Navigate to your `project_folder/csv/input_csv` and you should see one CSV file for each of the videos in your project. 
+
+Congratulation! You have now successfully imported your multi-animal pose-estimation tracking into SimBA and you are now ready to use this data to create predictive classifiers, analyze using already generated predictive classifiers, and/or analyze descriptive statistics with or without user-defined regions of intrest. 
+
+Go to [Scenario 1 - Creating a classifier from scratch](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario1.md#part-2-load-project-1) for tutorials on how to use the imported data to create predictive classifiers. 
+
+Go to [Scenario 2 - Using a classifier on new experimental data](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario2.md) for tutorials on how to analyze the imported data using previously generated classifiers. 
+
+Go to [Scenario 2 - Using a classifier on new experimental data](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario2.md) for tutorials on how to analyze the imported data using previously generated classifiers. 
+
+
+
+
 
 
 
