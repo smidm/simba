@@ -71,7 +71,22 @@ In this tutorial we have multi-animal tracking data in .H5 file format from Deep
 
 When SLEAP and multi-animal DLC predicts the location of body-parts for multiple animals, the animals are assigned *tracks* or *tracklets* (for more information, see the SLEAP and maDLC documentaion), with one track for each animal. In the current scenario, this means that the DeepLabCut assigned *track 1* may be the Resident, and *track 2* may be the Intruder. It could also be the reverse, and *track 2* is the Intruder and *track 2* is the Resident. The identity of the animal representing *track 1* and *track 2* will also likely shift across different videos. We need to organise the pose-estimation data such as *track 1* is Animal 1 (Resident) and *track 2*  is Animal 2 (Intruder) **in all of our tracking files** and SimBA will do this through an interactive interface. 
 
-1. 
+1. When you click on `Import h5`, you should see the following window pop open.
+
+![](/images/Multi_animal5.jpg "createproject")
+
+This represents the first frame of your video, with the pose-estimation body-part locations plotted on top of the animals. If you can tell which animal is the Resident and which animal is the Intruder based on this frame, proceed to press `c` on your keyboard. If you cannot tell which animal is the Resident and which animal is teh Intruder, press `x` on your keyboard.
+
+If you press `x`, then a new random frame will be shown and you will be asked again if you can tell which animal is the Resident and which animal is the Intruder based on this new frame.
+
+When you press `c`, you will be shown this new message asking you to double left mouse click on the Resident (Animal 1). After you double left mouse click on the Resident (Animal 1), you will be asked to double left mouse click on the Intruder (Animal 2). 
+
+![](/images/Multi_animal6.jpg "createproject")
+
+Once you have clicked on all the animals in your project. You will be asked if you are happy with your assigned identities. If you are not , press `x` to start re-assigning the animal identities. If you are happy with 
+
+
+
 
 
 
