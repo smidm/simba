@@ -93,7 +93,7 @@ The process for each video should look like in the following gif:
 
 ![](/images/multiVid.gif "createproject")
 
->*Note I*: What happens behind-the-hood is that SimBA looks for the body-part closes to your left-mouse click and assigns the track that encompasses that body-part to the current Animal ID (e.g., the Resident). Thus, we recommend that your left-mouse click is at the centroid of the animal you wish to assign the current identity to prevent several tracks being assigned to the same identity. 
+>*Note I*: What happens behind-the-hood is that SimBA looks for the body-part closest to your left-mouse click and assigns the track that encompasses that body-part to the current Animal ID (e.g., the Resident). Thus, we recommend that your left-mouse click is at the centroid of the animal you wish to assign the current identity to prevent several tracks being assigned to the same identity. 
 
 >*Note II*: The back-end process of converting and organising SLEAP H5 tracks into CSV is a little more time-consuming for SimBA than converting DLC tracks, so if you are shifting from DeepLabCut to SLEAP pose-estimation, and the process takes a little longer than what you are used to, then don't be alarmed - you can follow the progress through messages printed in the main SimBA terminal window. 
 
