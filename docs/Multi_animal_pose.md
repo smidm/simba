@@ -1,6 +1,6 @@
 # Using multi-animal pose-estimation data in SimBA
 
-New developments in pose-estimation packages [DeepLabCut (version >=2.2b5)](https://github.com/DeepLabCut/DeepLabCut/releases/tag/v2.2b5) and [SLEAP](https://sleap.ai/) allows users to track similar looking animals, such as multiple littermate mice of the same coat-color. In prior versions of these pose-estimation tools, tracking several similar looking animals could be difficult as a single body-part (i.e., the "Snout" or the "Tail-base") was intermittently attributed to either animal. In this tutorial we will import multi-animal tracking data from DLC into SimBA from videos of two black-coated C57BL6J mice. 
+New developments in pose-estimation packages such as [DeepLabCut (version >=2.2b5)](https://github.com/DeepLabCut/DeepLabCut/releases/tag/v2.2b5) and [SLEAP](https://sleap.ai/) can allow users to track similar looking animals, for example multiple littermate mice of the same coat-color. In prior versions of these pose-estimation tools, tracking several similar looking animals could be difficult as a single body-part (i.e., the "Snout" or the "Tail-base") was intermittently attributed to either animal. In this tutorial we will import multi-animal tracking data from DeepLabCut into SimBA from videos of two black-coated C57BL6J mice. 
 
 ### Step 1: Generate Project Config
 
