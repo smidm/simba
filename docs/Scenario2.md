@@ -8,15 +8,15 @@ All scenarios assume that the videos have been [pre-processed](https://github.co
 Three days of resident-intruder testing between aggressive CD-1 mice and subordinante C57 intruders. Each day of testing has 10 pairs of mice, for a total of 30 videos recorded across 3 days. Recordings are 3 minutes in duration, in color, at 30fps.
 
 # **Scenario 2**: Using a classifier on new experimental data...
-In this scenario you have either are now ready to do one of two things. 
+In this scenario you are now ready to do one of two things. 
 
-(i) You have generated a classifier yourself which performance you are happy with. For example, you have followed [Scenario 1](https://github.com/sgoldenlab/simba/edit/master/docs/Scenario1.md), and generated the classifier for "Behavior that Will Get a Nature Paper (Behavior BtWGaNP)" and its working well. 
+(i) You have generated a classifier yourself which performance you are happy with. For example, you have followed [Scenario 1](https://github.com/sgoldenlab/simba/edit/master/docs/Scenario1.md), and generated the classifier for "Behavior that Will Get a Nature Paper (Behavior BtWGaNP)" and it's working well. 
 
-(ii) Or, you have received a behavioral classifier generated somewhere else, and now you want to use the classifier to score Behavior BtWGaNP on your experimental videos. For example, you have downloaded the classifier from our [OSF repository](https://osf.io/d69jt/).
+(ii) Or, you have received a behavioral classifier for Behavior BtWGaNP generated somewhere else, and now you want to use the classifier to score Behavior BtWGaNP on your experimental videos. For example, you may have downloaded the classifier from our [OSF repository](https://osf.io/d69jt/).
 
 ## Part 1: 'Clean up your project', or create a new project. 
 
-We will need start with a project directory tree that does not contain any other data than the data we want to analyze. If you are coming along from [Scenario 1](https://github.com/sgoldenlab/simba/edit/master/docs/Scenario1.md), you will have a project tree already. However, this project tree contains the files used to create the BtWGaNP classifier: if you look in the subdirectories of the `project_folder/csv/input` directory, you will see the 19 CSV files we used to generate the project. If we continue using this project, SimBA will see these CSV files and analyze these files in addition to your Experimental data. Thus, one option is to manually remove these files from the subdirectories of our project (see the tutorial for [Scenario 4](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario4.md#part-1-clean-up-your-project--or-alternatively-create-a-new-project) where we take this approach). 
+We will need start with a project directory tree that does not contain any other data than the data we want to analyze. If you are coming along from [Scenario 1](https://github.com/sgoldenlab/simba/edit/master/docs/Scenario1.md), you will have a project tree already. However, this project tree contains the files used to create the BtWGaNP classifier: if you look in the subdirectories of the `project_folder/csv/input` directory, you will see the 19 CSV files we used to generate the project. If we continue using this project, SimBA will see these CSV files and analyze these files in addition to your Experimental data. Thus, one option is to manually remove these files from the subdirectories of our project, or use SimBAs in-build functions to archive these files - (see the tutorial for [Scenario 4](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario4.md#part-1-clean-up-your-project--or-alternatively-create-a-new-project) where we take this approach). 
 
 Another alternative is to [create a new](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario1.md#part-1-create-a-new-project) project that only contains the data from our Experiment. In this Scenario, we will create a [new project](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario1.md#part-1-create-a-new-project). 
 
@@ -28,7 +28,7 @@ Go ahead and create a new project with your experimental data, follow the instru
 
 In [Part 1](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario2.md#part-1-clean-up-your-project-or-create-a-new-project) above, we created a project that contains your experimental data. To continue working with this project, we **must** load it. To load the project and process your experimental data, follow the instructions for **Step 1 to 5** in either the [Scenario 1 tutorial](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario1.md) or [Part I of the generic tutorial](https://github.com/sgoldenlab/simba/blob/master/docs/tutorial.md#step-1-generate-project-config]). 
 
-In this current Scenario 2, you can **ignore Steps 6-7 of the tutorials**, which deals with annotating data and creating classifiers. 
+In this current Scenario 2, you can **ignore Steps 6-7 of the tutorials mentioned above**, which deals with annotating data and creating classifiers. 
 
 However, **Step 1-5** of the [Scenario 1 tutorial](https://github.com/sgoldenlab/simba/blob/master/docs/Scenario1.md), which we need to complete,  performs [outlier correction in the tracking](https://github.com/sgoldenlab/simba/blob/master/misc/Outlier_settings.pdf) and [extracts features](https://github.com/sgoldenlab/simba/blob/master/misc/Feature_description.csv), which we will need to do before analyzing our experimental data.
 
@@ -36,7 +36,7 @@ However, **Step 1-5** of the [Scenario 1 tutorial](https://github.com/sgoldenlab
 
 At this point we have Experimental data, which has been corrected for outliers and with features extracted, and we want to predict behavior BtWGaNP in these videos. 
 
->*Note*: If you haven't generated the predictive classifier yourself, and you have instead downloaded the predictive classifier or been given the predictive calssifier by someone else, we will also include information on how you can use that classifier to predict behaviors in your videos. 
+>*Note*: If you haven't generated the predictive classifier yourself, and you have instead downloaded the predictive classifier or been given the predictive classifier by someone else, we will also include information on how you can use that classifier to predict behaviors in your videos. 
 
 1. In the Load Project menu, navigate to the **Run Machine Model** tab and you should see the following window. 
 
