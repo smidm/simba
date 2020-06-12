@@ -5,7 +5,7 @@ import os
 import time
 import subprocess
 import itertools
-import deeplabcut
+#import deeplabcut
 import csv
 import sys
 from tkinter import *
@@ -87,12 +87,12 @@ from sklearn_plot_scripts.plot_sklearn_results_2 import plotsklearnresult
 from drop_bp_cords import define_bp_drop_down
 from drop_bp_cords import bodypartConfSchematic
 from define_new_pose_config import define_new_pose_configuration
-from dpk_create_project_ini import write_dpkfile
-from dpk_script.create_annotation_set import createAnnotationSet
-from dpk_script.annotator import dpkAnnotator
-from dpk_script.train_model import trainDPKmodel
-from dpk_script.Predict_new_video import predictnewvideoDPK
-from dpk_script.Visualize_video import visualizeDPK
+#from dpk_create_project_ini import write_dpkfile
+#from dpk_script.create_annotation_set import createAnnotationSet
+#from dpk_script.annotator import dpkAnnotator
+#from dpk_script.train_model import trainDPKmodel
+#from dpk_script.Predict_new_video import predictnewvideoDPK
+#from dpk_script.Visualize_video import visualizeDPK
 from reset_poseConfig import reset_DiagramSettings
 from plot_threshold import plot_threshold
 from merge_frames_movie import mergeframesPlot
