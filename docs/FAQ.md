@@ -68,9 +68,9 @@ When you execute your process (e.g., Feature extraction), SimBA looks in the fol
 
 1. There is no *Video1* in your `project_folder/logs/video_info.csv` file. You may have renamed your files somewhere along the process or introduced a typo (e.g., there is a `Video1 ` or `Video 1` or possibly `video1`, but there is **no** `Video1` which is what SimBA is looking for. 
 
-2. There are several `Video1` rows in your `project_folder/logs/video_info.csv` file. SimBA happens to find them all, can't decide which one is the correct one, and it breakes. Make sure you only have one row per video in your project in your `project_folder/logs/video_info.csv` file. 
+2. There are several `Video1` rows in your `project_folder/logs/video_info.csv` file. SimBA happens to find them all, can't decide which one is the correct one, and breaks. Make sure you only have one row representing each video in your project in your `project_folder/logs/video_info.csv` file. 
 
-3. Another CSV file, has somehow nestled into your `project_filder/csv/outlier_corrected_movement_location` folder along the way (and this file is neither part of the project or has been processed in the [`Video Parameters`](https://github.com/sgoldenlab/simba/blob/master/docs/tutorial.md#step-3-set-video-parameters) tool in SimBA. SimBA sees it as it is present in the `project_filder/csv/outlier_corrected_movement_location` folder, but when it looks in the `project_folder/logs/video_info.csv` file - the **fps**, and **pixels per millimiter** is missing and you get thrown this Error. 
+3. Another CSV file, has somehow nestled into your `project_filder/csv/outlier_corrected_movement_location` folder along the way (and this file is neither part of the project or has been processed in the [`Video Parameters`](https://github.com/sgoldenlab/simba/blob/master/docs/tutorial.md#step-3-set-video-parameters) tool in SimBA. SimBA sees it as it is present in the `project_filder/csv/outlier_corrected_movement_location` folder, but when it looks in the `project_folder/logs/video_info.csv` file - the **fps**, and **pixels per millimiter** is missing and you get thrown this error. 
 
 
 
