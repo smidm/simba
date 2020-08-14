@@ -20,7 +20,7 @@
 
 2. You are running Python 3.6.0 (or python 3.6.10 in conda). 
 
-- **SimBA won't launch - there's an error, with some complaint about Shapely**
+### **SimBA won't launch - there's an error, with some complaint about Shapely**
 
 Check out these issue threads for potential fixes:
 
@@ -28,7 +28,7 @@ https://github.com/sgoldenlab/simba/issues/12
 
 https://github.com/sgoldenlab/simba/issues/11#issuecomment-596805732
 
-#### SimBA won't start, and there is GPU related errors such as "ImportError: Could not find 'cudart64_100.dll'.
+### SimBA won't start, and there is GPU related errors such as "ImportError: Could not find 'cudart64_100.dll'.
 
 Make sure;
 
@@ -39,7 +39,7 @@ Make sure;
 5. Protobuf 3.6.0 is installed: pip install protobuf==3.6.0
 
 
-- **I get an error when launching the ROI interface - it is complaining about `ValueError: cannot set WRITEABLE flag to True of this array`. It may also have seen `Missing optional dependency 'tables`**
+### I get an error when launching the ROI interface - it is complaining about `ValueError: cannot set WRITEABLE flag to True of this array`. It may also have seen `Missing optional dependency 'tables`
 
 Make sure you are running a later version of pytables(>= version 3.51). Also make sure you have numpy 1.18.1 and pandas 0.25.3 installed. To be sure of this, run:
 
@@ -50,7 +50,7 @@ Make sure you are running a later version of pytables(>= version 3.51). Also mak
 `pip install numpy==1.18.1`
 
 
-#### My videos are very long and can be a pain to annotate in the SimBA annotation GUI, can I skip annotating some frames and still build an accurate classification model based on annotated/not-annotated frames?
+### My videos are very long and can be a pain to annotate in the SimBA annotation GUI, can I skip annotating some frames and still build an accurate classification model based on annotated/not-annotated frames?
 
 When you first open the SimBA labelling GUI for a new, not previously annotated video (e.g., a video that has **not** gone through [SimBA "pseudo-labelling](https://github.com/sgoldenlab/simba/blob/master/docs/pseudoLabel.md)), SimBA automatically treats all frames in that video as **NOT** containing any of your behaviours of interest. 
 
@@ -59,7 +59,7 @@ If you decide, for example, to only annotate half of the video, then SimBA and a
 However, if the second part of your video **does** contain examples of your behaviors of interest, the machine learning algorithm will suffer a lot(!). Because what you are doing in this scenario is giving the machine examples of your behaviors of interest, while at the same time telling the algorithm that it **isn't** your behaviour of interest: finding the relationships between your features and your behavior will be so much more difficult (and maybe impossible) if you give it the computer the wrong information.
 
 
-#### When I try to execute some process in SimBA (e.g., feature extraction, or generate frames or videos etc), I get a TypeError that may look somthing like this:
+### When I try to execute some process in SimBA (e.g., feature extraction, or generate frames or videos etc), I get a TypeError that may look somthing like this:
 ```
 TypeError("cannot convert the series to " "{0}".format(str(converter)))
 TypeError: cannot convert the series to <class 'float'>
