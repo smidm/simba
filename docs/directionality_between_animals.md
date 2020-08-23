@@ -26,12 +26,16 @@ Once complete, several new files will be generated in your SimBA project directo
 Finally, SimBA generates a CSV log file containing summary statistics on how much time each animal spent looking at each other. This file can be found in the `project_folder/logs` directory. This filename of this file is time-stamped, and have a name that may look something like this: `Direction_data_20200822151424.csv`. The content of this file may look like this (if you are tracking 5 animals. if you are tracking fewer animals, then the file will contain fewer columns):
 
 ![](https://github.com/sgoldenlab/simba/blob/master/images/Directionality_97.PNG)
+**(click on image to enlarge)**
 
 In this file there will be one column for each animal relationship, and one row for each analysed video. In the example screenshot above, the first column header reads *JJ_directing_Simon_s* and contains the time, in seconds, the animal with the ID *JJ* spent directing towards the animal with the ID *Simon* (92.2s in Video1). In column F (or column 5), with the header *Simon_directing_JJ_s*, we can read the time, in seconds, the animal with the ID *Simon* spent directing towards the animal with the ID *JJ* (107.3s in Video1). Indeed, styding the directionality results in all of the four of the videos in the example screenshot above, Simon seems a little more intrested in looking at JJ than JJ is intrested in looking at Simon throughout. 
 
 >Note: These summary statistics are calculated based on all body-parts for each animal. If an animal can see any body-part belonging to another animal, then the animal can see the other animal. For example, if the animal with the ID Simon only has the tail-base of the animal with the ID JJ in the *line of sight* in one frame, and all body-parts belonging to the animal with the ID JJ in the *line of sight* in second frame, then both frames are counted as *JJ* being in the *line of sight* of Simon. 
 
 4. Next, to visua
+
+
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/Testing_Video_3_short.PNG" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/Together_2.gif" width="425"/>
 
 
 
