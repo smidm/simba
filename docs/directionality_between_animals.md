@@ -35,7 +35,10 @@ In this file there will be one column for each animal relationship, and one row 
 4. Next, to visua
 
 
-<img src="https://github.com/sgoldenlab/simba/blob/master/images/Testing_Video_3_short.PNG" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/Together_2.gif" width="425"/>
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/Testing_Video_3_short.gif" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/Together_2.gif" width="425"/>
+
+
+For higher-quality examples of the expected visualization results, visit the [SimBA YouTube playlist](https://www.youtube.com/playlist?list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl), the examples the gifs above where generated from can be found here ([Example 1 - 2 mice](https://www.youtube.com/watch?v=tsOJCOYZRAA&list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl&index=19&t=0s), [Example 2 - 5 mice](https://www.youtube.com/watch?v=d6pAatreb1E&list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl&index=20&t=0s)). 
 
 
 
