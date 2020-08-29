@@ -6,6 +6,12 @@ In videos containing multiple animals, it may be valuable to know how much time 
 
 >Note 2: The pose-estimation tracking of the two *ears*, and the *nose*, of each animal, or the equivalent in other species, is required for this to work. See more information on this pre-requisite below. Furthermore, see the below image and its legend more information on how the code in SimBA estimates the relationships between animal body-parts and/or user-defined ROIs.  
 
+<div align="center">
+  
+[Click here for better-quality rendered MP4](https://www.youtube.com/watch?v=d6pAatreb1E&list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl&index=20&t=0s)
+
+</div>
+
 <p align="center">
   <img src="https://github.com/sgoldenlab/simba/blob/master/images/Testing_Video_3_short.gif" width="425"/>
 </p>
@@ -63,14 +69,6 @@ Once complete, you can find your final rendered videos in your `project_folder\f
 
 [Example 2 - 2 mice on YouTube](https://www.youtube.com/watch?v=tsOJCOYZRAA&list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl&index=19&t=0s)
 ![](https://github.com/sgoldenlab/simba/blob/master/images/Together_2.gif)
-
-
-
-
-<img src="https://github.com/sgoldenlab/simba/blob/master/images/Testing_Video_3_short.gif" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/Together_2.gif" width="425"/>
-
-
-
 
 
 
