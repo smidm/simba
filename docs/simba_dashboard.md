@@ -47,13 +47,14 @@ Depending on the number of videos that the user has within the project, this ste
 
 ![](https://github.com/sgoldenlab/simba/blob/master/images/Dash_4.JPG "Plotly Graph Features")
 
-
 * ```SimBA Dashboard file (H5)```: In this menu, click on 'Browse File` and select the dataframe H5 dataframe container you wish to use within the Dashboard interface. 
 >**Important**: The selected `SimBA Dashboard file` .H5 file does not have to have been generated within the currently opened project. The selected `SimBA Dashboard file` .H5 can have been generated within the SimBA interface on any anywhere, within any project (regardless of pose-estimation tool, tracked body-parts, and the number and specific classifier used). 
 
+* ```SimBA Groups file (CSV)```: **(OPTIONAL)** If we want to plot and compare group-level metrics, then we need to tell SimBA and [Plotly](https://plotly.com/) which videos belong to which group. The most straightforward way of doing this is to create our own CSV file, where each column represents each group, and each row represents each video belonging to that group, and feed the information in this CSV file into the Dashboard. For the current tutorial example, with 438 videos, I have created a CSV file example that can be downloaded [HERE](https://github.com/sgoldenlab/simba/blob/master/misc/SimBA_Dash_tutorial_Group_information.csv). This file contains **two columns** representing the two groups (males v. females), with one row for each video in each group. For this example, we have 337 videos in the **male** group, and 101 videos in the **female** group. 
 
+![](https://github.com/sgoldenlab/simba/blob/master/images/Dash_5.JPG "Plotly Graph Features")
 
-* ```SimBA Groups file (CSV)```:
+Once you have selected your files `SimBA Dashboard file` (.. and the optional SimBA Groups file), go ahead and click on `Open SimBA / Plotly dataset`. 
 
 
 
