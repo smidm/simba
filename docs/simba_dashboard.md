@@ -2,26 +2,69 @@
 
 ## Overview
 
-Once analyses have been performed in SimBA, users need to visualize results and easy, interactive, paths for exporting the parts of the datasets of interest into third-party statistical and graphing applications and scripts. For this SimBA has a built-in interactive graphical dashboard written in [Plotly](https://plotly.com/) and [Dash](https://github.com/plotly/dash) that allows users to inspect huge data-sets, and create their own new data-sets (through drag-and-drop, mouse-clicks, zoom-functions and more) without writing costum code.  In this tutrial, we outline the different functions within the SimBA Dashboard. We also provide Tutorial for specific use cases. The SimBA dashboard was written by [Sophia Hwang](https://github.com/sophihwang26) and [Aasiya Islam](https://github.com/aasiya-islam).  Sharing datasets, note. 
+Once analyses have been performed in SimBA, users may have the need to visualize the results of the classifiers and easy, interactive, paths towards exporting the parts of the datasets of interest into third-party statistical and graphing applications and scripts. For this SimBA has a built-in interactive graphical dashboard written in [Plotly](https://plotly.com/) and [Dash](https://github.com/plotly/dash) that allows users to inspect **huge** (or not so huge) data-sets, and create their own new data-sets (through drag-and-drop, mouse-clicks, zoom-functions and more) without havin to write any costum code.  In this tutrial, we outline and explain the different functions within the SimBA Plotly Dashboard, and how we can utilize the dashboard for analyzing and exporting a larger data-sets (attack classifications in 438 videos) to third-party applications.  The SimBA dashboard was written by [Sophia Hwang](https://github.com/sophihwang26) and [Aasiya Islam](https://github.com/aasiya-islam).
 
 ![](https://github.com/sgoldenlab/simba/blob/master/images/logo980.JPG "SimBA Plotly Overview")
 
 <img src="https://github.com/sgoldenlab/simba/blob/master/images/cover%20photo.PNG" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/overall_bar.JPG" width="425"/>
 
-<img src="https://github.com/sgoldenlab/simba/blob/master/images/probability2.JPG" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/plot_behavior.JPG" width="425"/>
 
+### PART 1: Generating a SimBA Dashboard file and opening the Dashboard
 
-### PART 1: Opening the Dashboard
+1. To open the SimBA Dashboard, we first need to create a single *collated* dashboard dataset file in SimBA. This single dashboard file is ahighly compressed [HDF dataframe container](https://en.wikipedia.org/wiki/Hierarchical_Data_Format) that contains all your data that we want to be able to play around with within our Plotly dashboard. 
 
-1. To open the SimBA Dashboard, we first need to create a single dataset file in SimBA that the dashboard can handle. To do this, begin by loading your project in SimBA. In the main SimBA console window, click on `File` and `Load project`. In the **[Load Project]** window, click on `Browse File` and select the `project_config.ini` that belongs to your project, and then click `Load Project`. 
+>Note: This dataframe container also provides an efficient way of sharing data, and can be opened in SimBA at any location without any other project files being required.
 
-2. Navigate to the `Visualizations` tab, and you should see the following menu on the right hand side, titled `Plotly / Dash`. 
+2. To generate this file, begin by loading your project in SimBA. In the main SimBA console window, click on `File` and `Load project`. In the **[Load Project]** window, click on `Browse File` and select the `project_config.ini` that belongs to your project, and then click `Load Project`. 
+ 
+3. Navigate to the `Visualizations` tab, and you should see the following menu on the right hand side, titled `Plotly / Dash`. 
 
 ![](https://github.com/sgoldenlab/simba/blob/master/images/Dash_1.JPG "Plotly Graph Features")
 
-3. The first part of this menu contains 5 tick-box menus. We will use these tick-box menus to specify what data we want to be able to play around with within our Plotly dashboard, and the user can select whetever they wich to include:
+4. The first part of this menu contains 5 tick-box menus. We will use these tick-box menus to specify *what* data we want to have contained within our dashboard file (e.g., what data we want to be able to be able to handle interactively). In this tutorial we will go ahead and tick `Sklearn results`, `Time bin analyses`, `Probabilities`.
 
 * ```Sklearn results```: 
+
+* ```Time bin analyses```:
+
+* ```Probabilities```:
+
+* ```Severity analyses```:
+
+* ```Entire Machine Classification dataframes```:
+
+Once we have ticked the tick-boxes for the data we want to include, go ahead and click on `Save SimBA/Plotly dataset`. This will generate a single, highly-compressed, `H5` dataframe container, which will be located in the `project_folder/logs` directory. The filename, of this file, will be date-time stamped, and be named something like this: `SimBA_dash_file_20200829090616.h5`.
+
+>Note: This is a highly compressed file. In this example tutorial, the 438  have been compressed into a very-much sharable 32MB that contain all the data indicated by the tick boxes selected in the SimBA GUI 'Plotly /Dash` submenu:
+
+![](https://github.com/sgoldenlab/simba/blob/master/images/Dash_2.JPG "Plotly Graph Features")
+
+Depending on the number of videos that the user has within the project, this step may take some time. You can follwo the progress in the Main SimBA terminal window. 
+
+### PART 2: Opening the SimBA Dashboard file
+
+1. To open and inspect a `SimBA/Plotly dataset` h5 file, we will use the two menus circled in blue below:
+
+![](https://github.com/sgoldenlab/simba/blob/master/images/Dash_4.JPG "Plotly Graph Features")
+
+
+* ```SimBA Dashboard file (H5)```: In this menu, click on 'Browse File` and select the dataframe H5 dataframe container you wish to use within the Dashboard interface. 
+>**Important**: The selected `SimBA Dashboard file` .H5 file does not have to have been generated within the currently opened project. The selected `SimBA Dashboard file` .H5 can have been generated within the SimBA interface on any anywhere, within any project (regardless of pose-estimation tool, tracked body-parts, and the number and specific classifier used). 
+
+
+
+* ```SimBA Groups file (CSV)```:
+
+
+
+
+
+
+
+
+
+
+
 
 
 
