@@ -5,10 +5,9 @@
 Once analyses have been performed in SimBA, users may have the need to visualize the results of the classifiers and easy, interactive, paths towards exporting the parts of the datasets of interest into third-party statistical and graphing applications and scripts. For this SimBA has a built-in interactive graphical dashboard written in [Plotly](https://plotly.com/) and [Dash](https://github.com/plotly/dash) that allows users to inspect **huge** (or not so huge) data-sets, and create their own new data-sets (through drag-and-drop, mouse-clicks, zoom-functions and more) without havin to write any costum code.  In this tutrial, we outline and explain the different functions within the SimBA Plotly Dashboard, and how we can utilize the dashboard for analyzing and exporting a larger data-sets (attack classifications in 438 videos) to third-party applications.  The SimBA dashboard was written by [Sophia Hwang](https://github.com/sophihwang26) and [Aasiya Islam](https://github.com/aasiya-islam).
 
 <p align="center">
-<img src="https://github.com/sgoldenlab/simba/blob/master/images/logo980.JPG" />
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/Dash_logo.png" />
 </p>
 
-<img src="https://github.com/sgoldenlab/simba/blob/master/images/cover%20photo.PNG" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/overall_bar.JPG" width="425"/>
 
 
 ### PART 1: Generating a SimBA Dashboard file and opening the Dashboard
