@@ -4,7 +4,9 @@
 
 Once analyses have been performed in SimBA, users may have the need to visualize the results of the classifiers and easy, interactive, paths towards exporting the parts of the datasets of interest into third-party statistical and graphing applications and scripts. For this SimBA has a built-in interactive graphical dashboard written in [Plotly](https://plotly.com/) and [Dash](https://github.com/plotly/dash) that allows users to inspect **huge** (or not so huge) data-sets, and create their own new data-sets (through drag-and-drop, mouse-clicks, zoom-functions and more) without havin to write any costum code.  In this tutrial, we outline and explain the different functions within the SimBA Plotly Dashboard, and how we can utilize the dashboard for analyzing and exporting a larger data-sets (attack classifications in 438 videos) to third-party applications.  The SimBA dashboard was written by [Sophia Hwang](https://github.com/sophihwang26) and [Aasiya Islam](https://github.com/aasiya-islam).
 
-![](https://github.com/sgoldenlab/simba/blob/master/images/logo980.JPG "SimBA Plotly Overview")
+<p align="center">
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/logo980.JPG" />
+</p>
 
 <img src="https://github.com/sgoldenlab/simba/blob/master/images/cover%20photo.PNG" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/overall_bar.JPG" width="425"/>
 
@@ -54,7 +56,12 @@ Depending on the number of videos that the user has within the project, this ste
 
 ![](https://github.com/sgoldenlab/simba/blob/master/images/Dash_5.JPG "Plotly Graph Features")
 
-Once you have selected your files `SimBA Dashboard file` (.. and the optional SimBA Groups file), go ahead and click on `Open SimBA / Plotly dataset`. 
+Once you have selected your files `SimBA Dashboard file` (.. and the optional SimBA Groups file), go ahead and click on the `Open SimBA / Plotly dataset` button. A little time will pass for the application to load, but eventually a window looking similar to this (on the left in the image below) should pop open. Alternatively, if you feel like this interface is finicky to work with, you can also navigate to the the IP `127.0.0.1:8050` adress in your webbrowser (tested with Google Chrome webbrower) and you should see the native Dash interface (on the right in the image below; **click on the images below to enlarge**): 
+
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/Dash_6.JPG" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/Dash_7.JPG" width="425"/>
+
+
+### PART 3: Dashboard overview
 
 
 
@@ -73,19 +80,6 @@ Once you have selected your files `SimBA Dashboard file` (.. and the optional Si
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-![](https://github.com/sgoldenlab/simba/blob/master/images/cover%20photo.PNG "SimBA Plotly Overview")
 
 
 ### Part 1: Graph Overview
