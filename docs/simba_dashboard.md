@@ -2,10 +2,43 @@
 
 ## Overview
 
+Once analyses have been performed in SimBA, users need to visualize results and easy, interactive, paths for exporting the parts of the datasets of interest into third-party statistical and graphing applications and scripts. For this SimBA has a built-in interactive graphical dashboard written in [Plotly](https://plotly.com/) and [Dash](https://github.com/plotly/dash) that allows users to inspect huge data-sets, and create their own new data-sets (through drag-and-drop, mouse-clicks, zoom-functions and more) without writing costum code.  In this tutrial, we outline the different functions within the SimBA Dashboard. We also provide Tutorial for specific use cases. The SimBA dashboard was written by [Sophia Hwang](https://github.com/sophihwang26) and [Aasiya Islam](https://github.com/aasiya-islam).  Sharing datasets, note. 
+
+![](https://github.com/sgoldenlab/simba/blob/master/images/logo980.JPG "SimBA Plotly Overview")
+
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/cover%20photo.PNG" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/overall_bar.JPG" width="425"/>
+
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/probability2.JPG" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/plot_behavior.JPG" width="425"/>
+
+
+### PART 1: Opening the Dashboard
+
+1. To open the SimBA Dashboard, we first need to create a single dataset file in SimBA that the dashboard can handle. To do this, begin by loading your project in SimBA. In the main SimBA console window, click on `File` and `Load project`. In the **[Load Project]** window, click on `Browse File` and select the `project_config.ini` that belongs to your project, and then click `Load Project`. 
+
+2. Navigate to the `Visualizations` tab, and you should see the following menu on the right hand side, titled `Plotly / Dash`. 
+
+![](https://github.com/sgoldenlab/simba/blob/master/images/Dash_1.JPG "Plotly Graph Features")
+
+3. The first part of this menu contains 5 tick-box menus. We will use these tick-box menus to specify what data we want to be able to play around with within our Plotly dashboard, and the user can select whetever they wich to include:
+
+* ```Sklearn results```: 
 
 
 
-# PART 1: Plot Overview
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ![](https://github.com/sgoldenlab/simba/blob/master/images/cover%20photo.PNG "SimBA Plotly Overview")
