@@ -1,4 +1,4 @@
-# Interactive Data Visualizations in SimBA
+# Interactive Data Visualization in SimBA
 
 ## Overview
 
@@ -70,9 +70,9 @@ The left hand side of the Dashboard interface (showed in the image just below) d
 
 The Dashboard menus display three tabs: `Data`, `Graph Settings` and `Download Settings`. The first of these tabs (`Data`) the users can specify which classifier to plot, what type of data from that classifier, and what type. The `DATA` tab contains several sub-menus, 
 
-* **The `Select Behavior to Plot` submenu**. This sub-menu contains three drop-down menus. The first which is behaviors, Category, feature.   
+* **The `Select Behavior to Plot` submenu**. This sub-menu contains three drop-down menus: Behaviors, Category, and Feature.   
 
-* **The `Plotting Group Means` submenu**. This sub-menu contains three drop-down menus. The first which is behaviors.
+* **The `Plotting Group Means` submenu**. This sub-menu a single menu, `Select Group(s)`. The first which is behaviors.
 
 * **The `Plotting Individual Group` submenu**. This sub-menu contains three drop-down menus. The first which is behaviors.
 
@@ -80,13 +80,45 @@ The Dashboard menus display three tabs: `Data`, `Graph Settings` and `Download S
 
 The Dashboard menus display three tabs: `Data`, `Graph Settings` and `Download Settings`. The first of these tabs (`Data`) the users can specify which classifier to plot, what type of data from that classifier, and what type
 
-
-
-
-
 #### The `DOWNLOAD SETTINGS` tab
 
 The Dashboard menus display three tabs: `Data`, `Graph Settings` and `Download Settings`. The first of these tabs (`Data`) the users can specify which classifier to plot, what type of data from that classifier, and what type... 
+
+
+### Part 3: Plot Settings
+
+With each displayed plots, Plotly has many features and settings that allow users to better visualize the graphs and compare data as well as download the plots as images to your own computer. These settings can be accessed by hovering your mouse at the top right of any of the displayed graphs, like this:
+
+<p align="center">
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/Dash_gif_01.gif" />
+</p>
+
+These settings are described in detailed in the [Plotly documentation], but are descibed in brief here below:
+
+* ```Download Plot```: 
+
+* ```Zoom```:
+
+* ```Pan```:
+
+* ```Box Select```:
+
+* ```Lasso Select```:
+
+* ```Zoom In```:
+
+* ```Zoom Out```:
+
+* ```Autoscale```:
+
+* ```Reset Axes```:
+
+* ```Toggle Spike Lines```:
+
+* ```Show closest data on hover```:
+
+* ```Compare data on hover```:
+
 
 
 
@@ -155,35 +187,7 @@ also change this [here](https://github.com/sgoldenlab/simba/blob/master/docs/plo
 * Legends: 
 
 
-### Part 3: Plot Settings
 
-With each of the plots, Plotly features many settings to better visualize the graphs and compare data as well as download the plots as images to your own computer.
-
-![](https://github.com/sgoldenlab/simba/blob/master/images/probability_features.png "Plotly Graph Features")
-
-* ```Download Plot```: 
-
-* ```Zoom```:
-
-* ```Pan```:
-
-* ```Box Select```:
-
-* ```Lasso Select```:
-
-* ```Zoom In```:
-
-* ```Zoom Out```:
-
-* ```Autoscale```:
-
-* ```Reset Axes```:
-
-* ```Toggle Spike Lines```:
-
-* ```Show closest data on hover```:
-
-* ```Compare data on hover```:
 
 
 # PART 2: Plot Dashboard
