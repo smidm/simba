@@ -1,4 +1,4 @@
-# Calculate directionality across animals in SimBA
+# Calculate "directionality"  between animals in SimBA (who is looking at who)
 
 In videos containing multiple animals, it may be valuable to know how much time each animal spend directing towards each other, and we calculate this with appropriate pose-estimation data in SimBA. For a better understanding of this kind of data, and if it is relevant for your specific application, see the end of this tutorial for rendered visualization examples. In other words, we can use SimBA to get measures, in seconds, of much time *Animal 1* spend directing towards *Animal 2*, and how much time *Animal 2* spend directing towards *Animal 1* (... and so on for all the relationships for all the animals tracked in each video). We can also use SimBA to generate visualizations of these metrics, so that we can be comfortable with that the "directionality" data that is summarized in the created CSV files and dataframes are accurate. 
 
@@ -6,7 +6,14 @@ In videos containing multiple animals, it may be valuable to know how much time 
 
 >Note 2: The pose-estimation tracking of the two *ears*, and the *nose*, of each animal, or the equivalent in other species, is required for this to work. See more information on this pre-requisite below. Furthermore, see the below image and its legend more information on how the code in SimBA estimates the relationships between animal body-parts and/or user-defined ROIs.  
 
-![](https://github.com/sgoldenlab/simba/blob/master/images/Directionality_ROI.PNG)
+<p align="center">
+  <img src="https://github.com/sgoldenlab/simba/blob/master/images/Testing_Video_3_short.gif" width="425"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/sgoldenlab/simba/blob/master/images/Directionality_ROI.PNG" width="425"/>
+</p>
+
 
 
 # Before analyzing directionality in SimBA
@@ -19,7 +26,7 @@ Specifically, for working with directionality between animal in SimBA, begin by 
 
 1. In the main SimBA console window, begin loading your project by clicking on `File` and `Load project`. In the **[Load Project]** tab, click on `Browse File` and select the `project_config.ini` that belongs to your project. 
 
-2. Navigate to the ROI tab. On the right hand side, within the `Analyze distances/velocity` sub-menu, there are two buttons (circled in red in the image below) - (i) `Analyze directionality between animals` and (ii) `Visualiza directionality between animals`.
+2. Navigate to the ROI tab. On the right hand side, within the `Analyze distances/velocity` sub-menu, there are two buttons (circled in red in the image below) - (i) `Analyze directionality between animals` and (ii) `Visualize directionality between animals`.
 
 ![](https://github.com/sgoldenlab/simba/blob/master/images/Directionality_99.PNG)
 
@@ -33,24 +40,34 @@ Next, the preceeding four columns are primarily saved for visualization purposes
 
 ![](https://github.com/sgoldenlab/simba/blob/master/images/Directionality_98.PNG)
 
-Finally, SimBA generates a CSV log file containing summary statistics on how much time each animal spent looking at each other. This file can be found in the `project_folder/logs` directory. This filename of this file is time-stamped, and have a name that may look something like this: `Direction_data_20200822151424.csv`. The content of this file may look like this (if you are tracking 5 animals. if you are tracking fewer animals, then the file will contain fewer columns):
+Perhaps more importantly, SimBA generates a CSV log file that contains summary statistics. This includes how much time each animal spent directing towards all other animals present in the video. This file can be found in the `project_folder/logs` directory. This filename of this file is time-stamped, and have a name that may look something like this: `Direction_data_20200822151424.csv`. The content of this file should look like the image just below (if you are tracking 5 animals. if you are tracking fewer animals, then the file will contain fewer columns):
 
 ![](https://github.com/sgoldenlab/simba/blob/master/images/Directionality_97.PNG)
-**(click on image to enlarge)**
+**(click on this image for enlarged view)**
 
-In this file there will be one column for each animal relationship, and one row for each analysed video. In the example screenshot above, the first column header reads *JJ_directing_Simon_s* and contains the time, in seconds, the animal with the ID *JJ* spent directing towards the animal with the ID *Simon* (92.2s in Video1). In column F (or column 5), with the header *Simon_directing_JJ_s*, we can read the time, in seconds, the animal with the ID *Simon* spent directing towards the animal with the ID *JJ* (107.3s in Video1). Indeed, styding the directionality results in all of the four of the videos in the example screenshot above, Simon seems a little more intrested in looking at JJ than JJ is intrested in looking at Simon throughout. 
+Thi log file will contain one column for each animal relationship, and one row for each analysed video. In the example screenshot above, the first column header reads *JJ_directing_Simon_s* and contains the time, in seconds, that the animal with the ID *JJ* spent directing towards the animal with the ID *Simon* (92.2s in the video named Video1). In column F (or column 5), with the header *Simon_directing_JJ_s*, we can read the time, in seconds, that the animal with the ID *Simon* spent directing towards the animal with the ID *JJ* (107.3s in Video1). Indeed, studying the directionality results in all of the four videos in the example screenshot above, the animal *Simon* does seems a little more intrested in directing towards the animal named *JJ*, than the animal *JJ* is interested in directing towards the animal named *Simon*. 
 
->Note: These summary statistics are calculated based on all body-parts for each animal. If an animal can see any body-part belonging to another animal, then the animal can see the other animal. For example, if the animal with the ID Simon only has the tail-base of the animal with the ID JJ in the *line of sight* in one frame, and all body-parts belonging to the animal with the ID JJ in the *line of sight* in second frame, then both frames are counted as *JJ* being in the *line of sight* of Simon. 
+>Note: These summary statistics are calculated based on all body-parts for each animal. If an animal is directing **any** body-part belonging to a specific other animal, then the animal is directing towards that other specific animal. For example, even if the animal with the ID *Simon* only has the tail-base of the animal with the ID JJ in the *line of sight* in one frame, the animal with the ID *JJ* is still counted as being in the *line of sight* in of the animal with the ID *Simon*. 
 
-4. Next, we may to visualize these directionality data - for peace of mind - that the metrics seen in the output desriptive statistics and CSV files are plausable. 
+4. Next, we may to visualize these directionality data - for peace of mind - that the metrics seen in the output desriptive statistics and CSV files outlined above are accurate and plausable. To do this, ga ahead and click on the second button described above - `Visualize directionality between animals`.
+
+>Note: Rendering videos are time-consuming and computaionally expensive. If you have many videos, many animals, and high fps/resolution, it might take some time. You can follow the progress in the main SimBA terminal window. 
+
+Once complete, you can find your final rendered videos in your `project_folder\frames\output\ROI_directionality_visualize` folder. For higher-quality examples of the expected final output videos for experimental scenarious containing five animals, or two animals, see the SimBA [SimBA YouTube playlist](https://www.youtube.com/playlist?list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl). 
+
+
+
+[Example 1 - 5 mice](https://www.youtube.com/watch?v=d6pAatreb1E&list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl&index=20&t=0s)
+![](https://github.com/sgoldenlab/simba/blob/master/images/Testing_Video_3_short.gif)
+
+
+[Example 2 - 2 mice on YouTube](https://www.youtube.com/watch?v=tsOJCOYZRAA&list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl&index=19&t=0s)
+![](https://github.com/sgoldenlab/simba/blob/master/images/Together_2.gif)
+
+
 
 
 <img src="https://github.com/sgoldenlab/simba/blob/master/images/Testing_Video_3_short.gif" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/Together_2.gif" width="425"/>
-
-
-For higher-quality examples of the expected visualization results, visit the [SimBA YouTube playlist](https://www.youtube.com/playlist?list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl), the examples the gifs above where generated from can be found here ([Example 1 - 2 mice](https://www.youtube.com/watch?v=tsOJCOYZRAA&list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl&index=19&t=0s), [Example 2 - 5 mice](https://www.youtube.com/watch?v=d6pAatreb1E&list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl&index=20&t=0s)). 
-
-
 
 
 
