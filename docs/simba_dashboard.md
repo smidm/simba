@@ -60,7 +60,55 @@ Once you have selected your files `SimBA Dashboard file` (.. and the optional Si
 
 ### PART 3: Dashboard overview
 
-The left hand side of teh Dashboard interface displays the **Dashboard menues**. These dashboard menus allow users  
+The left hand side of the Dashboard interface (showed in the image just below) displays the **Dashboard menues**. These dashboard menus allow users to specify what data is displayed on the graphs shown the right hand side of the interface, how the data is plotted, how to save the graphs, and export subsets of data into self-contained CSV and / or [parquet](https://towardsdatascience.com/the-best-format-to-save-pandas-data-414dca023e0d) files for further processing. In this part of the tutorial, we will go through all of the settings and their functions in the SimBA Dashboard:
+
+<p align="center">
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/Dash_8.JPG" />
+</p>
+
+##### The `DATA` tab
+
+The Dashboard menus display three tabs: `Data`, `Graph Settings` and `Download Settings`. The first of these tabs (`Data`) the users can specify which classifier to plot, what type of data from that classifier, and what type. The `DATA` tab contains several sub-menus, 
+
+* **The `Select Behavior to Plot` submenu**. This sub-menu contains three drop-down menus. The first which is behaviors, Category, feature.   
+
+* **The `Plotting Group Means` submenu**. This sub-menu contains three drop-down menus. The first which is behaviors.
+
+* **The `Plotting Individual Group` submenu**. This sub-menu contains three drop-down menus. The first which is behaviors.
+
+##### The `GRAPH SETTINGS` tab
+
+The Dashboard menus display three tabs: `Data`, `Graph Settings` and `Download Settings`. The first of these tabs (`Data`) the users can specify which classifier to plot, what type of data from that classifier, and what type
+
+
+
+
+
+#### The `DOWNLOAD SETTINGS` tab
+
+The Dashboard menus display three tabs: `Data`, `Graph Settings` and `Download Settings`. The first of these tabs (`Data`) the users can specify which classifier to plot, what type of data from that classifier, and what type... 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
