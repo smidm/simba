@@ -9,7 +9,6 @@ Once analyses have been performed in SimBA, users may have the need to visualize
 </p>
 
 
-
 ### PART 1: Generating a SimBA Dashboard file and opening the Dashboard
 
 1. To open the SimBA Dashboard, we first need to create a single *collated* dashboard dataset file in SimBA. This single dashboard file is ahighly compressed [HDF dataframe container](https://en.wikipedia.org/wiki/Hierarchical_Data_Format) that contains all your data that we want to be able to play around with within our Plotly dashboard. 
@@ -59,8 +58,9 @@ Once you have selected your files `SimBA Dashboard file` (.. and the optional Si
 
 <img src="https://github.com/sgoldenlab/simba/blob/master/images/Dash_6.JPG" width="425"/> <img src="https://github.com/sgoldenlab/simba/blob/master/images/Dash_7.JPG" width="425"/>
 
-
 ### PART 3: Dashboard overview
+
+The left hand side of teh Dashboard interface displays the **Dashboard menues**. These dashboard menus allow users  
 
 
 
