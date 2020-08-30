@@ -70,11 +70,21 @@ The left hand side of the Dashboard interface (showed in the image just below) d
 
 The Dashboard menus display three tabs: `Data`, `Graph Settings` and `Download Settings`. The first of these tabs (`Data`) the users can specify which classifier to plot, what type of data from that classifier, and what type. The `DATA` tab contains several sub-menus, 
 
-* **The `Select Behavior to Plot` submenu**. This sub-menu contains three drop-down menus: Behaviors, Category, and Feature.   
+* **The `Select Behavior to Plot` submenu**. This sub-menu contains three drop-down menus: `Behaviors`, `Category`, and `Feature`. 
 
-* **The `Plotting Group Means` submenu**. This sub-menu a single menu, `Select Group(s)`. The first which is behaviors.
+If we click on the on the `Behaviors` submenu, we see a drop down menu where we can choose any of the classified behaviors in the project (in this case `Attack`, `Mounting`, `Escape`, `Pursuit`, and `Defensive`). Selecting a classifier, will update the graphs displayed on the right-hand side with the selected classifier.
 
-* **The `Plotting Individual Group` submenu**. This sub-menu contains three drop-down menus. The first which is behaviors.
+<p align="center">
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/Dash_gif_02.gif" />
+</p>
+
+If we click on the on the `Category` submenu, we see a drop down menu where we can choose what type of data to display for the selected classifier. Selecting a data category, will update the graphs displayed on the right-hand side with the selected data category.
+
+<p align="center">
+<img src="https://github.com/sgoldenlab/simba/blob/master/images/Dash_gif_03.gif" />
+</p>
+
+If we click on the on the `Feature` submenu, we see a drop down menu where we can choose what type of sub-type of the data is displayed. For example, this can be schaning from the number of bout events, to the total durations in seconds.
 
 ##### The `GRAPH SETTINGS` tab
 
