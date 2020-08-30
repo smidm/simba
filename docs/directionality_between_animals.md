@@ -11,6 +11,7 @@ In videos containing multiple animals, it may be valuable to know how much time 
 [Click here for better-quality rendered MP4](https://www.youtube.com/watch?v=d6pAatreb1E&list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl&index=20&t=0s)
 
 </div>
+
 [![Video example: SimBA YouTube playlist](https://github.com/sgoldenlab/simba/blob/master/images/Direct_10.JPG)](https://youtu.be/d6pAatreb1E "Video example: SimBA YouTube playlist")
 
 
