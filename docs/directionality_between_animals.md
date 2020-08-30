@@ -4,13 +4,19 @@ In videos containing multiple animals, it may be valuable to know how much time 
 
 >Note 1: Firstly, and importantly, SimBA does not calculate actual *gaze* (this is *not* possible using **only** pose-estimation data). Instead, SimBA use a proxy calculation for estimating if the animal is directing toward another animal, or [a user-defined region of interest](https://github.com/sgoldenlab/simba/blob/master/docs/ROI_tutorial.md#part-3-generating-features-from-roi-data), using the nose coordinate and the two ear-coordinates (or the equivalent coordinate on any other animal species). For more information on how SimBA estimates the location of the animals *eyes*, and how SimBA estimates if an object, or other animal, is within the *line of sight* of the specific animal, check out the [SimBA ROI tutorial - Part 3](https://github.com/sgoldenlab/simba/blob/master/docs/ROI_tutorial.md#part-3-generating-features-from-roi-data).
 
->Note 2: The pose-estimation tracking of the two *ears*, and the *nose*, of each animal, or the equivalent in other species, is required for this to work. See more information on this pre-requisite below. Furthermore, see the below image and its legend more information on how the code in SimBA estimates the relationships between animal body-parts and/or user-defined ROIs.  
+>Note 2: The pose-estimation tracking of the two *ears*, and the *nose*, of each animal, or the equivalent in other species, is required for this to work. See more information on this pre-requisite below. Furthermore, see the below image and its legend more information on how the code in SimBA estimates the relationships between animal body-parts and/or user-defined ROIs. 
 
 <div align="center">
   
 [Click here for better-quality rendered MP4](https://www.youtube.com/watch?v=d6pAatreb1E&list=PLi5Vwf0hhy1R6NDQJ3U28MOUJPfl2YWYl&index=20&t=0s)
 
 </div>
+[![Video example: SimBA YouTube playlist](https://github.com/sgoldenlab/simba/blob/master/images/Direct_10.JPG)](https://youtu.be/d6pAatreb1E "Video example: SimBA YouTube playlist")
+
+
+
+
+
 
 <p align="center">
   <img src="https://github.com/sgoldenlab/simba/blob/master/images/Testing_Video_3_short.gif" width="425"/>
