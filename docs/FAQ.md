@@ -28,6 +28,8 @@ https://github.com/sgoldenlab/simba/issues/12
 
 https://github.com/sgoldenlab/simba/issues/11#issuecomment-596805732
 
+https://github.com/sgoldenlab/simba/issues/70#issuecomment-703180294
+
 ### SimBA won't start, and there is GPU related errors such as "ImportError: Could not find 'cudart64_100.dll'.
 
 Make sure;
