@@ -1,4 +1,4 @@
-# Calculate "directionality"  between animals in SimBA (who is looking at who)
+# Who is looking at who: calculate "directionality" between animals in SimBA 
 
 In videos containing multiple animals, it may be valuable to know how when, and how much time, each animal spend directing towards each other. We can calculate this with appropriate pose-estimation data in SimBA. For a better understanding of this kind of data, and if it is relevant for your specific application, see the videos and gifs below and the the rendered visualization examples at the end of this tutorial. Here we use SimBA to get measures, in seconds, of much time *Animal 1* spend directing towards *Animal 2*, and how much time *Animal 2* spend directing towards *Animal 1* (... and so on for all the relationships for all the animals tracked in each video). We can also use SimBA to generate visualizations of these metrics, so that we can be comfortable with that the "directionality" data that is summarized in the created CSV files and dataframes are accurate. 
 
