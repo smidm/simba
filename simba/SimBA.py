@@ -6185,3 +6185,7 @@ def main():
     print('Welcome fellow scientists :)' + '\n')
     print('\n')
     app.root.mainloop()
+
+
+if __name__ == '__main__':
+    main()
