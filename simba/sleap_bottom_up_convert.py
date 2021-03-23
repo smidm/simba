@@ -3,12 +3,14 @@ import pandas as pd
 import json
 import cv2
 import os, glob
-from pylab import *
+import matplotlib.pylab as plt
 import numpy as np
 import operator
 from functools import reduce
 from configparser import ConfigParser, MissingSectionHeaderError, NoOptionError
-from simba.rw_dfs import *
+import errno
+import rw_dfs
+
 
 def importSLEAPbottomUP(inifile, dataFolder, currIDList):
 
@@ -83,7 +85,7 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
             config.set("General settings", "animal_no", str(animalsNo))
             with open(inifile, "w+") as f:
                 config.write(f)
-            f.close
+            f.close()
 
         bpNameListGrouped = [xy_heads[x:x + len(OrderedBpList) * 2] for x in range(0, len(xy_heads) - 2, len(OrderedBpList) * 2)]
 
@@ -144,7 +146,7 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
             frameCounter+=1
 
         dataDf.fillna(0, inplace=True)
-        save_df(dataDf, wfileType, savePath)
+        rw_dfs.save_df(dataDf, wfileType, savePath)
         csvPaths.append(savePath)
         print('Saved file ' + savePath)
 
@@ -159,7 +161,7 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
             cv2.putText(overlay, str(currID), (centerX, centerY), cv2.FONT_HERSHEY_SIMPLEX, fontScale, (0, 255, 0), 5)
             currIDcounter += 1
 
-    cmap = cm.get_cmap(str('tab10'), animalsNo + 1)
+    cmap = plt.cm.get_cmap(str('tab10'), animalsNo + 1)
     for i in range(cmap.N):
         rgb = list((cmap(i)[:3]))
         rgb = [i * 255 for i in rgb]
@@ -170,10 +172,14 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
         indBpCordList, frameNumber, addSpacer, EuclidDistanceList, changeList = [], 0, 2, [], []
         ID_user_cords, currIDcounter = [], 0
         assigningIDs, completePromt, chooseFrame, assignBpCords = False, False, True, True
-        currDf = read_df(csvFile, wfileType)
+        currDf = rw_dfs.read_df(csvFile, wfileType)
         vidFname = os.path.join(videoFolder, os.path.basename(csvFile).replace('.csv', '.mp4'))
         vidBasename = os.path.basename(vidFname)
+        if not os.path.exists(vidFname):
+            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), vidFname)
         cap = cv2.VideoCapture(vidFname)
+        if not cap.isOpened():
+            raise Exception('Con\'t open video file ' + vidFname)
         width, height = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         mySpaceScale, myRadius, myResolution, myFontScale = 40, 10, 1500, 1.2
         maxResDimension = max(width, height)
@@ -185,6 +191,8 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
                 cv2.namedWindow('Define animal IDs', cv2.WINDOW_NORMAL)
                 cap.set(1, frameNumber)
                 ret, frame = cap.read()
+                if not ret:
+                    raise Exception('Can\'t read video file ' + vidFname)
                 overlay = frame.copy()
                 for animal_bps in range(len(bpNameListGrouped)):
                     currCols = bpNameListGrouped[animal_bps]

@@ -10,7 +10,7 @@ import csv
 import sys
 from tkinter import *
 from tkinter.filedialog import askopenfilename,askdirectory
-from tkinter import tix
+from tkinter import tix, messagebox
 import subprocess
 import platform
 import shutil
@@ -3122,7 +3122,10 @@ class project_config:
             importMultiDLCpose(self.configinifile,self.h5path.folder_path,self.dropdowndlc.getChoices(),idlist)
         else:
             ##SLEAP
-            importSLEAPbottomUP(self.configinifile,self.h5path.folder_path,idlist)
+            try:
+                importSLEAPbottomUP(self.configinifile,self.h5path.folder_path,idlist)
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
 
     def animalnames(self,noofanimal,master):
         try:
