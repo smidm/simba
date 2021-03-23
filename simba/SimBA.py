@@ -803,15 +803,22 @@ class FileSelect(Frame):
     def file_path(self):
         return self.filePath.get()
 
+
 class Entry_Box(Frame):
-    def __init__(self,parent=None,fileDescription="",labelwidth='',status = None,**kw):
+    def __init__(self, parent=None, fileDescription="", labelwidth='',status=None, validation=None, **kw):
+        super(Entry_Box, self).__init__(master=parent)
+        self.validation_methods = {
+            'numeric': (self.register(form_validator_is_numeric), '%P', '%d'),
+        }
         self.status = status if status is not None else NORMAL
         self.labelname = fileDescription
         Frame.__init__(self,master=parent,**kw)
         self.filePath = StringVar()
         self.lblName = Label(self, text=fileDescription,width=labelwidth,anchor=W)
         self.lblName.grid(row=0,column=0)
-        self.entPath = Entry(self, textvariable=self.filePath,state=self.status)
+        self.entPath = Entry(self, textvariable=self.filePath, state=self.status,
+                             validate='key',
+                             validatecommand=self.validation_methods.get(validation, None))
         self.entPath.grid(row=0,column=1)
 
     @property
@@ -2819,8 +2826,10 @@ class project_config:
 
         #SML Settings
         self.label_smlsettings = LabelFrame(self.label_generalsettings, text='SML Settings',padx=5,pady=5)
-        self.label_notarget = Entry_Box(self.label_smlsettings,'Number of predictive classifiers (behaviors):','33')
-        addboxButton = Button(self.label_smlsettings, text='<Add predictive classifier>', fg="navy", command=lambda:self.addBox(self.label_notarget.entry_get))
+        self.label_notarget = Entry_Box(self.label_smlsettings,'Number of predictive classifiers (behaviors):','33',
+                                        validation='numeric')
+        addboxButton = Button(self.label_smlsettings, text='<Add predictive classifier>', fg="navy",
+                              command=lambda:self.addBox(self.label_notarget.entry_get))
 
         ##dropdown for # of mice
         self.dropdownbox = LabelFrame(self.label_generalsettings, text='Animal Settings')
@@ -3301,7 +3310,7 @@ class project_config:
         except:
             print('Please select a video to proceed')
 
-    def addBox(self,noTarget):
+    def addBox(self, noTargetStr):
         try:
             for i in self.lab:
                 i.destroy()
@@ -3309,11 +3318,15 @@ class project_config:
                 i.destroy()
         except:
             pass
+        try:
+            noTarget = int(noTargetStr)
+        except ValueError:
+            assert False, 'invalid number of predictive classifiers'
 
         self.all_entries = []
-        self.lab=[0]*int(noTarget)
-        self.ent1=[0]*int(noTarget)
-        for i in range(int(noTarget)):
+        self.lab=[0]*noTarget
+        self.ent1=[0]*noTarget
+        for i in range(noTarget):
             self.lab[i]= Label(self.label_smlsettings, text=str('Classifier ') + str(i + 1))
             self.lab[i].grid(row=i+2, column=0, sticky=W)
             self.ent1[i] = Entry(self.label_smlsettings)
@@ -5990,6 +6003,14 @@ def CreateToolTip(widget, text):
         toolTip.hidetip()
     widget.bind('<Enter>', enter)
     widget.bind('<Leave>', leave)
+
+
+def form_validator_is_numeric(inStr, acttyp):
+    if acttyp == '1':  #insert
+        if not inStr.isdigit():
+            return False
+    return True
+
 
 class aboutgui:
     def __init__(self):
