@@ -3,9 +3,10 @@ import os
 import numpy as np
 from configparser import ConfigParser, NoOptionError, NoSectionError
 import glob
-from simba.rw_dfs import *
-from simba.drop_bp_cords import *
 from numba import jit
+import pandas as pd
+from .. import rw_dfs
+from .. import drop_bp_cords
 
 
 def extract_features_wotarget_user_defined(inifile):
@@ -27,8 +28,8 @@ def extract_features_wotarget_user_defined(inifile):
     #change videos name to str
     vidinfDf.Video = vidinfDf.Video.astype('str')
 
-    Xcols, Ycols, Pcols = getBpNames(inifile)
-    columnHeaders = getBpHeaders(inifile)
+    Xcols, Ycols, Pcols = drop_bp_cords.getBpNames(inifile)
+    columnHeaders = drop_bp_cords.getBpHeaders(inifile)
     columnHeadersShifted = [bp + '_shifted' for bp in columnHeaders]
 
     try:
@@ -49,7 +50,7 @@ def extract_features_wotarget_user_defined(inifile):
             multiAnimalIDList.append('Animal_' + str(animal + 1) + '_')
         multiAnimalStatus = False
         print('Applying settings for classical tracking...')
-    animalBpDict = create_body_part_dictionary(multiAnimalStatus, multiAnimalIDList, noAnimals, Xcols, Ycols, Pcols, [])
+    animalBpDict = drop_bp_cords.create_body_part_dictionary(multiAnimalStatus, multiAnimalIDList, noAnimals, Xcols, Ycols, Pcols, [])
 
     if not os.path.exists(csv_dir_out):
         os.makedirs(csv_dir_out)
@@ -91,7 +92,7 @@ def extract_features_wotarget_user_defined(inifile):
         for i in range(len(roll_windows_values)):
             roll_windows.append(int(fps / roll_windows_values[i]))
         loopy += 1
-        csv_df = read_df(currentFile, wfileType)
+        csv_df = rw_dfs.read_df(currentFile, wfileType)
         try:
             csv_df = csv_df.set_index('scorer')
         except KeyError:
@@ -178,7 +179,7 @@ def extract_features_wotarget_user_defined(inifile):
         fileOutName = os.path.basename(currentFile)
         savePath = os.path.join(csv_dir_out, fileOutName)
         print('Saving features...')
-        save_df(csv_df, wfileType, savePath)
+        rw_dfs.save_df(csv_df, wfileType, savePath)
         print('Feature extraction complete for ' + '"' + str(currVidName) + '".')
 
     print('All feature extraction complete.')
