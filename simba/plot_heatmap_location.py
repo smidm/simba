@@ -6,6 +6,7 @@ import os
 import cv2
 import numpy as np
 from drop_bp_cords import getBpHeaders
+from simba.rw_dfs import *
 
 def plotHeatMapLocation(inifile, animalbp1, mmSize, noIncrements, secIncrements, colorPalette, lastImageOnlyBol):
     config = ConfigParser()
@@ -15,6 +16,7 @@ def plotHeatMapLocation(inifile, animalbp1, mmSize, noIncrements, secIncrements,
     except MissingSectionHeaderError:
         print('ERROR:  Not a valid project_config file. Please check the project_config.ini path.')
     projectPath = config.get('General settings', 'project_path')
+    wfileType = config.get('General settings', 'workflow_file_type')
     csv_dir_in = os.path.join(projectPath, 'csv', 'outlier_corrected_movement_location')
     vidLogFilePath = os.path.join(projectPath, 'logs', 'video_info.csv')
     videoLog = pd.read_csv(vidLogFilePath)
@@ -32,7 +34,7 @@ def plotHeatMapLocation(inifile, animalbp1, mmSize, noIncrements, secIncrements,
         rgb.reverse()
         colorList.append(rgb)
 
-    filesFound = glob.glob(csv_dir_in + '/*.csv')
+    filesFound = glob.glob(csv_dir_in + '/*.' + wfileType)
     for currVid in filesFound:
         loopCounter += 1
         currVidBaseName = os.path.basename(currVid)
@@ -51,7 +53,7 @@ def plotHeatMapLocation(inifile, animalbp1, mmSize, noIncrements, secIncrements,
         targetCountArrayFrames = np.zeros((NbinsY, NbinsX))
         im = np.zeros((height, width, 3))
         im.fill(0)
-        currDf = pd.read_csv(currVid)
+        currDf = read_df(currVid, wfileType)
         newColHeads = getBpHeaders(inifile)
         newColHeads.insert(0, "scorer")
         currDf.columns = newColHeads

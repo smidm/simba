@@ -1,10 +1,11 @@
-import os
+import os, glob
 import cv2
 
 
 def downsamplevideo_auto(width,height,filesFound,outputdir):
 
     downsamplelist = []
+
     ########### DEFINE COMMAND ###########
     for i in filesFound:
         currentFile = i
@@ -12,7 +13,7 @@ def downsamplevideo_auto(width,height,filesFound,outputdir):
         outFile = str(outFile) + '_downsampled.mp4'
         output = os.path.basename(outFile)
 
-        command = (str('ffmpeg -y -i ') + '"' + str(outputdir) + '\\' + os.path.basename(currentFile)+ '"' + ' -vf scale='+str(width)+':'+ str(height) + ' ' + '"'+ str(outputdir) + '\\' + output + '"'+ ' -hide_banner' + '\n'
+        command = (str('ffmpeg -y -i ') + '"' + str(os.path.join(outputdir, os.path.basename(currentFile)))+ '"' + ' -vf scale='+str(width)+':'+ str(height) + ' ' + '"' + str(os.path.join(outputdir, output)) + '"'+ ' -hide_banner' + '\n'
                    'move \"' + str(outputdir) + '\\' + os.path.basename(currentFile) + '\" \"' + os.path.dirname(outputdir) + '\\' + 'tmp\"' + '\n'
                    'copy \"' + str(outputdir) + '\\' + output + '\" \"' +os.path.dirname(outputdir) +'\\' +'tmp\"' +'\n'
                    'rename \"' +os.path.join(str(outputdir),output) + '\" \"' + os.path.basename(currentFile)+'\"')

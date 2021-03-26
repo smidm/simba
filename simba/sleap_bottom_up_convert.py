@@ -11,6 +11,7 @@ from configparser import ConfigParser, MissingSectionHeaderError, NoOptionError
 from simba.rw_dfs import *
 
 def importSLEAPbottomUP(inifile, dataFolder, currIDList):
+
     def func(name, obj):
         attr = list(obj.attrs.items())
         if name == 'metadata':
@@ -54,7 +55,7 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
             videoName = filename.replace('.slp', '')
             print('Warning: The video name could not be found in the .SLP meta-data table')
             print('SimBA therefore gives the imported CSV the same name as the SLP file.')
-            print('To be sure that SimBAs slp import function works, make sure the .SLP file and the associated video file has the same file name - e.g., "Video1.slp" and "Video1.slp" borefore importing the videos and SLP files to SimBA.')
+            print('To be sure that SimBAs slp import function works, make sure the .SLP file and the associated video file has the same file name - e.g., "Video1.mp4" and "Video1.slp" before importing the videos and SLP files to SimBA.')
         savePath = os.path.join(outputDfFolder, videoName + '.csv')
         for bpName in final_dictionary['nodes']: bpNames.append((bpName['name']))
         skeletonOrder = final_dictionary['skeletons'][0]['nodes']
@@ -72,7 +73,7 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
 
         for animal in range(len(currIDList)):
             for bp in OrderedBpList:
-                colName1, colName2, colName3 = str('Annimal' + str(animal) + '_' + bp + '_x'), ('Annimal' + str(animal) + '_' + bp + '_y'), ('Annimal' + str(animal) + '_' + bp + '_p')
+                colName1, colName2, colName3 = str('Animal_' + str(animal+1) + '_' + bp + '_x'), ('Animal_' + str(animal+1) + '_' + bp + '_y'), ('Animal_' + str(animal+1) + '_' + bp + '_p')
                 xy_heads.extend((colName1, colName2))
                 bp_cord_names.append('_' + bp + '_x')
                 bp_cord_names.append('_' + bp + '_y')
@@ -86,6 +87,7 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
 
         bpNameListGrouped = [xy_heads[x:x + len(OrderedBpList) * 2] for x in range(0, len(xy_heads) - 2, len(OrderedBpList) * 2)]
 
+        print(len(dfHeader))
 
         dataDf = pd.DataFrame(columns=dfHeader)
 
@@ -136,6 +138,7 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
             for row in splitOutRow:
                 del row[-1]
             outRow = reduce(operator.concat, splitOutRow)
+
             dataDf.loc[len(dataDf)] = outRow
             startCurrFrame = endCurrFrame
             frameCounter+=1

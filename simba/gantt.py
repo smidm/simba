@@ -2,8 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 import numpy as np
-from configparser import ConfigParser
+from configparser import ConfigParser, NoSectionError, NoOptionError
 import glob
+from simba.rw_dfs import *
 
 def ganntplot_config(configini):
     config = ConfigParser()
@@ -15,6 +16,10 @@ def ganntplot_config(configini):
     csv_dir_in = os.path.join(projectPath, 'csv', 'machine_results')
     no_targets = config.getint('SML settings', 'No_targets')
     vidInfPath = os.path.join(projectPath, 'logs', 'video_info.csv')
+    try:
+        wfileType = config.get('General settings', 'workflow_file_type')
+    except NoOptionError:
+        wfileType = 'csv'
     vidinfDf = pd.read_csv(vidInfPath)
     boutStart_list, target_names, VideoCounter = [], [], 0
     colours = ['red', 'green', 'pink', 'orange', 'blue', 'purple', 'lavender', 'grey', 'sienna', 'tomato', 'azure',
@@ -22,7 +27,7 @@ def ganntplot_config(configini):
     colourTupleX = list(np.arange(3.5, 203.5, 5))
 
     ########### FIND CSV FILES ###########
-    filesFound = glob.glob(csv_dir_in + "/*.csv")
+    filesFound = glob.glob(csv_dir_in + "/*." + wfileType)
     print('Generating gantt plots for ' + str(len(filesFound)) + ' video(s)...')
 
     ########### GET TARGET COLUMN NAMES ###########
@@ -33,7 +38,7 @@ def ganntplot_config(configini):
     colours = colours[:len(target_names)]
 
     for currentFile in filesFound:
-        CurrentVideoName = os.path.basename(currentFile.replace('.csv', ''))
+        CurrentVideoName = os.path.basename(currentFile.replace('.' + wfileType, ''))
         print('Analyzing file ' + str(CurrentVideoName) + '...')
         videoSettings = vidinfDf.loc[vidinfDf['Video'] == str(CurrentVideoName)]
         try:
@@ -41,7 +46,7 @@ def ganntplot_config(configini):
         except TypeError:
             print('Error: make sure all the videos that are going to be analyzed are represented in the project_folder/logs/video_info.csv file')
         VideoCounter += 1
-        dataDf = pd.read_csv(currentFile)
+        dataDf = read_df(currentFile, wfileType)
         dataDf['frames'] = np.arange(len(dataDf))
         rowCount = dataDf.shape[0]
         saveDir = os.path.join(frames_dir_out, CurrentVideoName)

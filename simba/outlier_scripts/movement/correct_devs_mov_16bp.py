@@ -1,39 +1,43 @@
 import pandas as pd
-import os
+import os, glob
 import numpy as np
 import statistics
 import math
-from configparser import ConfigParser
+from configparser import ConfigParser, NoOptionError
 from datetime import datetime
+from numba import jit
+from simba.rw_dfs import *
 
 
 def dev_move_16(configini):
+    dfHeaders = ["Ear_left_1_x", "Ear_left_1_y", "Ear_left_1_p", "Ear_right_1_x", "Ear_right_1_y",
+                                    "Ear_right_1_p", "Nose_1_x", "Nose_1_y", "Nose_1_p", "Center_1_x", "Center_1_y",
+                                    "Center_1_p", "Lat_left_1_x", "Lat_left_1_y",
+                                    "Lat_left_1_p", "Lat_right_1_x", "Lat_right_1_y", "Lat_right_1_p", "Tail_base_1_x",
+                                    "Tail_base_1_y", "Tail_base_1_p", "Tail_end_1_x", "Tail_end_1_y", "Tail_end_1_p",
+                                    "Ear_left_2_x",
+                                    "Ear_left_2_y", "Ear_left_2_p", "Ear_right_2_x", "Ear_right_2_y", "Ear_right_2_p",
+                                    "Nose_2_x", "Nose_2_y", "Nose_2_p", "Center_2_x", "Center_2_y", "Center_2_p",
+                                    "Lat_left_2_x", "Lat_left_2_y",
+                                    "Lat_left_2_p", "Lat_right_2_x", "Lat_right_2_y", "Lat_right_2_p", "Tail_base_2_x",
+                                    "Tail_base_2_y", "Tail_base_2_p", "Tail_end_2_x", "Tail_end_2_y", "Tail_end_2_p"]
     dateTime = datetime.now().strftime('%Y%m%d%H%M%S')
-    filesFound = []
+    filesFound, loop, loopy = [], 0, 0
     configFile = str(configini)
     config = ConfigParser()
     config.read(configFile)
-    loop = 0
-    loopy = 0
     criterion = config.getfloat('Outlier settings', 'movement_criterion')
-
-    csv_dir = config.get('General settings', 'csv_path')
-    csv_dir_in = os.path.join(csv_dir, 'input_csv')
-    csv_dir_out = os.path.join(csv_dir, 'outlier_corrected_movement')
-    if not os.path.exists(csv_dir_out):
-        os.makedirs(csv_dir_out)
+    projectPath = config.get('General settings', 'project_path')
+    try:
+        wfileType = config.get('General settings', 'workflow_file_type')
+    except NoOptionError:
+        wfileType = 'csv'
+    csv_dir_in, csv_dir_out = os.path.join(projectPath, 'csv', 'input_csv'), os.path.join(projectPath, 'csv', 'outlier_corrected_movement')
     headers = ['Video', "frames_processed", 'Animal1_centroid', "Animal1_left_ear", "Animal1_right_ear", "Animal1_lateral_left", "Animal1_lateral_right",
                "Animal1_nose", "Animal1_tail_base", "Animal1_tail_end", 'Animal2_centroid', "Animal2_left_ear", "Animal2_right_ear", "Animal2_lateral_left",
                "Animal2_lateral_right", "Animal2_nose", "Animal2_tail_base", "Animal2_tail_end", "Sum"]
     log_df = pd.DataFrame(columns=headers)
-
-    ########### logfile path ###########
-    log_fn = 'Outliers_movement_' + str(dateTime) + '.csv'
-    log_path = config.get('General settings', 'project_path')
-    log_path = os.path.join(log_path, 'logs')
-    log_fn = os.path.join(log_path, log_fn)
-    if not os.path.exists(log_path):
-        os.makedirs(log_path)
+    log_path = os.path.join(projectPath, 'logs', 'Outliers_movement_' + str(dateTime) + '.csv')
 
     def add_correction_prefix(col, bpcorrected_list):
         colc = 'Corrected_' + col
@@ -98,31 +102,16 @@ def dev_move_16(configini):
         return df
 
     ########### FIND CSV FILES ###########
-    for i in os.listdir(csv_dir_in):
-        if i.__contains__(".csv"):
-            file = os.path.join(csv_dir_in, i)
-            filesFound.append(file)
+    filesFound = glob.glob(csv_dir_in + '/*.' + wfileType)
     print('Processing ' + str(len(filesFound)) + ' files for movement outliers...')
 
     ########### CREATE PD FOR RAW DATA AND PD FOR MOVEMENT BETWEEN FRAMES ###########
-    for i in filesFound:
+    for currentFile in filesFound:
         loopy += 1
-        currentFile = i
-        baseNameFile = os.path.basename(currentFile).replace('.csv', '')
-        csv_df = pd.read_csv(currentFile,
-                             names=["Ear_left_1_x", "Ear_left_1_y", "Ear_left_1_p", "Ear_right_1_x", "Ear_right_1_y",
-                                    "Ear_right_1_p", "Nose_1_x", "Nose_1_y", "Nose_1_p", "Center_1_x", "Center_1_y",
-                                    "Center_1_p", "Lat_left_1_x", "Lat_left_1_y",
-                                    "Lat_left_1_p", "Lat_right_1_x", "Lat_right_1_y", "Lat_right_1_p", "Tail_base_1_x",
-                                    "Tail_base_1_y", "Tail_base_1_p", "Tail_end_1_x", "Tail_end_1_y", "Tail_end_1_p",
-                                    "Ear_left_2_x",
-                                    "Ear_left_2_y", "Ear_left_2_p", "Ear_right_2_x", "Ear_right_2_y", "Ear_right_2_p",
-                                    "Nose_2_x", "Nose_2_y", "Nose_2_p", "Center_2_x", "Center_2_y", "Center_2_p",
-                                    "Lat_left_2_x", "Lat_left_2_y",
-                                    "Lat_left_2_p", "Lat_right_2_x", "Lat_right_2_y", "Lat_right_2_p", "Tail_base_2_x",
-                                    "Tail_base_2_y", "Tail_base_2_p", "Tail_end_2_x", "Tail_end_2_y", "Tail_end_2_p"])
-
-        csv_df = csv_df.drop(csv_df.index[[0, 1, 2]])
+        baseNameFile = os.path.basename(currentFile).replace(wfileType, '')
+        csv_df = read_df(currentFile, wfileType)
+        csv_df.columns = dfHeaders
+        csv_df = csv_df.drop(csv_df.index[[0, 1]])
         csv_df = csv_df.apply(pd.to_numeric)
 
         if 'frames' not in csv_df.columns:
@@ -169,54 +158,6 @@ def dev_move_16(configini):
         csv_df_combined['Mouse_2_nose_to_tail'] = np.sqrt(
             (csv_df_combined.Nose_2_x - csv_df_combined.Tail_base_2_x) ** 2 + (
                         csv_df_combined.Nose_2_y - csv_df_combined.Tail_base_2_y) ** 2)
-        csv_df_combined['Movement_mouse_1_centroid'] = np.sqrt(
-            (csv_df_combined.Center_1_x_shifted - csv_df_combined.Center_1_x) ** 2 + (
-                        csv_df_combined.Center_1_y_shifted - csv_df_combined.Center_1_y) ** 2)
-        csv_df_combined['Movement_mouse_2_centroid'] = np.sqrt(
-            (csv_df_combined.Center_2_x_shifted - csv_df_combined.Center_2_x) ** 2 + (
-                        csv_df_combined.Center_2_y_shifted - csv_df_combined.Center_2_y) ** 2)
-        csv_df_combined['Movement_mouse_1_nose'] = np.sqrt(
-            (csv_df_combined.Nose_1_x_shifted - csv_df_combined.Nose_1_x) ** 2 + (
-                        csv_df_combined.Nose_1_y_shifted - csv_df_combined.Nose_1_y) ** 2)
-        csv_df_combined['Movement_mouse_2_nose'] = np.sqrt(
-            (csv_df_combined.Nose_2_x_shifted - csv_df_combined.Nose_2_x) ** 2 + (
-                        csv_df_combined.Nose_2_y_shifted - csv_df_combined.Nose_2_y) ** 2)
-        csv_df_combined['Movement_mouse_1_tail_base'] = np.sqrt(
-            (csv_df_combined.Tail_base_1_x_shifted - csv_df_combined.Tail_base_1_x) ** 2 + (
-                        csv_df_combined.Tail_base_1_y_shifted - csv_df_combined.Tail_base_1_y) ** 2)
-        csv_df_combined['Movement_mouse_2_tail_base'] = np.sqrt(
-            (csv_df_combined.Tail_base_2_x_shifted - csv_df_combined.Tail_base_2_x) ** 2 + (
-                        csv_df_combined.Tail_base_2_y_shifted - csv_df_combined.Tail_base_2_y) ** 2)
-        csv_df_combined['Movement_mouse_1_tail_end'] = np.sqrt(
-            (csv_df_combined.Tail_end_1_x_shifted - csv_df_combined.Tail_end_1_x) ** 2 + (
-                        csv_df_combined.Tail_end_1_y_shifted - csv_df_combined.Tail_end_1_y) ** 2)
-        csv_df_combined['Movement_mouse_2_tail_end'] = np.sqrt(
-            (csv_df_combined.Tail_end_2_x_shifted - csv_df_combined.Tail_end_2_x) ** 2 + (
-                        csv_df_combined.Tail_end_2_y_shifted - csv_df_combined.Tail_end_2_y) ** 2)
-        csv_df_combined['Movement_mouse_1_left_ear'] = np.sqrt(
-            (csv_df_combined.Ear_left_1_x_shifted - csv_df_combined.Ear_left_1_x) ** 2 + (
-                        csv_df_combined.Ear_left_1_x - csv_df_combined.Ear_left_1_y) ** 2)
-        csv_df_combined['Movement_mouse_2_left_ear'] = np.sqrt(
-            (csv_df_combined.Ear_left_2_x_shifted - csv_df_combined.Ear_left_2_x) ** 2 + (
-                        csv_df_combined.Ear_left_2_y_shifted - csv_df_combined.Ear_left_2_y) ** 2)
-        csv_df_combined['Movement_mouse_1_right_ear'] = np.sqrt(
-            (csv_df_combined.Ear_right_1_x_shifted - csv_df_combined.Ear_right_1_x) ** 2 + (
-                        csv_df_combined.Ear_right_1_x - csv_df_combined.Ear_right_1_y) ** 2)
-        csv_df_combined['Movement_mouse_2_right_ear'] = np.sqrt(
-            (csv_df_combined.Ear_right_2_x_shifted - csv_df_combined.Ear_right_2_x) ** 2 + (
-                        csv_df_combined.Ear_right_2_y_shifted - csv_df_combined.Ear_right_2_y) ** 2)
-        csv_df_combined['Movement_mouse_1_lateral_left'] = np.sqrt(
-            (csv_df_combined.Lat_left_1_x_shifted - csv_df_combined.Lat_left_1_x) ** 2 + (
-                        csv_df_combined.Lat_left_1_x - csv_df_combined.Lat_left_1_y) ** 2)
-        csv_df_combined['Movement_mouse_2_lateral_left'] = np.sqrt(
-            (csv_df_combined.Lat_left_2_x_shifted - csv_df_combined.Lat_left_2_x) ** 2 + (
-                        csv_df_combined.Lat_left_2_y_shifted - csv_df_combined.Lat_left_2_y) ** 2)
-        csv_df_combined['Movement_mouse_1_lateral_right'] = np.sqrt(
-            (csv_df_combined.Lat_right_1_x_shifted - csv_df_combined.Lat_right_1_x) ** 2 + (
-                        csv_df_combined.Lat_right_1_x - csv_df_combined.Lat_right_1_y) ** 2)
-        csv_df_combined['Movement_mouse_2_lateral_right'] = np.sqrt(
-            (csv_df_combined.Lat_right_2_x_shifted - csv_df_combined.Lat_right_2_x) ** 2 + (
-                        csv_df_combined.Lat_right_2_y_shifted - csv_df_combined.Lat_right_2_y) ** 2)
 
         csv_df_combined = csv_df_combined.fillna(0)
 
@@ -301,15 +242,14 @@ def dev_move_16(configini):
             col_corr_2x = bpcorrected_list2x[idx]
             col_corr_2y = bpcorrected_list2y[idx]
             csv_df_combined = correct_value_position(csv_df_combined, col2x, col2y, col_corr_2x, col_corr_2y, dict_pos)
-
-        scorer = pd.read_csv(currentFile).scorer.iloc[2:]
-        scorer = pd.to_numeric(scorer)
-        scorer = scorer.reset_index()
-        scorer = scorer.drop(['index'], axis=1)
-        csv_df_combined['scorer'] = scorer.values.astype(int)
+        # scorer = pd.read_csv(currentFile).scorer.iloc[2:]
+        # scorer = pd.to_numeric(scorer)
+        # scorer = scorer.reset_index()
+        # scorer = scorer.drop(['index'], axis=1)
+        # csv_df_combined['scorer'] = scorer.values.astype(int)
 
         csv_df_combined = csv_df_combined[
-            ["scorer", "Corrected_Ear_left_1_x", "Corrected_Ear_left_1_y", "Ear_left_1_p", "Corrected_Ear_right_1_x",
+            ["Corrected_Ear_left_1_x", "Corrected_Ear_left_1_y", "Ear_left_1_p", "Corrected_Ear_right_1_x",
              "Corrected_Ear_right_1_y", "Ear_right_1_p", "Corrected_Nose_1_x", "Corrected_Nose_1_y", "Nose_1_p",
              "Corrected_Center_1_x", "Corrected_Center_1_y", "Center_1_p", "Corrected_Lat_left_1_x",
              "Corrected_Lat_left_1_y", "Lat_left_1_p", "Corrected_Lat_right_1_x", "Corrected_Lat_right_1_y",
@@ -323,21 +263,18 @@ def dev_move_16(configini):
              "Tail_end_2_p"]]
 
         # csv_df_combined = csv_df_combined.drop(csv_df_combined.index[0:2])
-        df_headers = pd.read_csv(currentFile, nrows=0)
-        csv_df_combined['frames'] = np.arange(len(csv_df_combined))
-        framesProcessed = csv_df_combined['frames'].max()
-        csv_df_combined = csv_df_combined.drop(['frames'], axis=1)
-        csv_df_combined.columns = df_headers.columns
-        csv_df_combined = pd.concat([df_headers, csv_df_combined])
+        #df_headers = pd.read_csv(currentFile, nrows=0)
+        framesProcessed = len(csv_df_combined)+1
+        # csv_df_combined = csv_df_combined.drop(['frames'], axis=1)
+        # csv_df_combined.columns = df_headers.columns
+        # csv_df_combined = pd.concat([df_headers, csv_df_combined])
         fileName = os.path.basename(currentFile)
         fileName, fileEnding = fileName.split('.')
-        fileOut = str(fileName) + str('.csv')
+        fileOut = str(fileName) + '.' + wfileType
         pathOut = os.path.join(csv_dir_out, fileOut)
-        csv_df_combined.to_csv(pathOut, index=False)
-
-        fixed_M1_pos = []
-        fixed_M2_pos = []
-        currentFixedList = []
+        csv_df_combined = csv_df_combined.loc[:, ~csv_df_combined.columns.duplicated()]
+        save_df(csv_df_combined, wfileType, pathOut)
+        fixed_M1_pos, fixed_M2_pos, currentFixedList = [], [], []
         currentFixedList.append(baseNameFile)
         currentFixedList.append(framesProcessed)
         for k in list(dict_pos):
@@ -354,11 +291,10 @@ def dev_move_16(configini):
         totalfixed = sum(fixed_M2_pos) + sum(fixed_M1_pos)
         currentFixedList.append(totalfixed)
         log_df.loc[loop] = currentFixedList
-
         loop = loop + 1
-        print(str(baseNameFile) + '. Tot frames: '+ str(framesProcessed) + '. Outliers animal 1: ' + str(sum(fixed_M1_pos)) + '. ' + 'Outliers animal 2: ' + str(sum(fixed_M2_pos)) + '. % outliers: ' + str(round(totalfixed / (framesProcessed * 16), 3)) + '.')
+        print(str(baseNameFile) + ' Tot frames: '+ str(framesProcessed) + '. Outliers animal 1: ' + str(sum(fixed_M1_pos)) + '. ' + 'Outliers animal 2: ' + str(sum(fixed_M2_pos)) + '. % outliers: ' + str(round(totalfixed / (framesProcessed * 16), 3)) + '.')
 
     log_df['% body parts corrected'] = log_df['Sum'] / (log_df['frames_processed'] * 16)
     log_df['Video'] = log_df['Video'].apply(str)
-    log_df.to_csv(log_fn, index=False)
+    log_df.to_csv(log_path, index=False)
     print('Log for corrected "movement outliers" saved in project_folder/logs')

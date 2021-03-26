@@ -100,6 +100,7 @@ from simba.ROI_directionality_to_other_animals_visualize import *
 from simba.import_solomon import solomonToSimba
 from simba.reverse_tracking_order import reverse_tracking_2_animals
 from simba.Kleinberg_burst_analysis import run_kleinberg
+from simba.FSTCC import FSTCC_perform
 
 import urllib.request
 from cefpython3 import cefpython as cef
@@ -2312,6 +2313,66 @@ class shorten_video:
         self.label_time.grid(row=2,sticky=W)
         button_cutvideo2.grid(row=3)
 
+class multi_shorten_video:
+    def __init__(self):
+        # Popup window
+        self.multishort = Toplevel()
+        self.multishort.minsize(200, 200)
+        self.multishort.wm_title("Clip video into multiple videos")
+
+        self.lblmultishort = LabelFrame(self.multishort, text='Split videos into different parts', font='bold', padx=5, pady=5)
+        # videopath
+        self.videopath1selected = FileSelect(self.lblmultishort, "Video path", title='Select a video file')
+        self.noclips = Entry_Box(self.lblmultishort,'# of clips','8')
+        confirmclip = Button(self.lblmultishort,text='Confirm',command=lambda:self.expand(self.noclips.entry_get))
+
+        runbutton = Button(self.multishort,text='Clip video', command= lambda:splitvideos(self.videopath1selected.file_path,self.allentries),fg='navy',font=("Helvetica",12,'bold'))
+
+        #organize
+        self.lblmultishort.grid(row=0,sticky=W)
+        self.videopath1selected.grid(row=1,sticky=W,columnspan=2)
+        self.noclips.grid(row=2,sticky=W)
+        confirmclip.grid(row=2,column=1,sticky=W)
+
+        runbutton.grid(row=5)
+
+    def expand(self,noclips):
+
+        try:
+            self.table.destroy()
+        except:
+            pass
+
+        noclips = int(noclips)
+
+        self.table = LabelFrame(self.multishort)
+
+        lbl_clip = Label(self.table,text='Clip #')
+        lbl_start = Label(self.table,text='Start Time')
+        lbl_stop = Label(self.table,text='Stop Time')
+
+        #organize table
+        self.table.grid(row=2,sticky=W)
+        lbl_clip.grid(row=0,column=0,sticky=W)
+        lbl_start.grid(row=0,column=1)
+        lbl_stop.grid(row=0,column=2)
+
+        #list
+        self.ent1 = [0] * noclips
+        self.ent2 = [0] * noclips
+        self.ent3 = [0] * noclips
+
+        for i in range(noclips):
+            self.ent1[i] = Label(self.table,text='Clip '+str(i+1))
+            self.ent1[i].grid(row=i+2,sticky=W)
+            self.ent2[i] = Entry(self.table)
+            self.ent2[i].grid(row=i+2,column=1,sticky=W)
+            self.ent3[i] = Entry(self.table)
+            self.ent3[i].grid(row=i+2,column=2,sticky=W)
+
+        self.allentries = [self.ent2,self.ent3]
+
+
 class change_imageformat:
 
     def __init__(self):
@@ -3433,6 +3494,7 @@ class loadprojectini:
         tab11 = ttk.Frame(tab_parent)
         tab12 = ttk.Frame(tab_parent)
 
+
         tab_parent.add(tab2, text= f"{'[ Further imports (data/video/frames) ]':20s}")
         tab_parent.add(tab3, text=f"{'[ Video parameters ]':20s}")
         tab_parent.add(tab4, text=f"{'[ Outlier correction ]':20s}")
@@ -3443,7 +3505,7 @@ class loadprojectini:
         tab_parent.add(tab9, text=f"{'[ Run machine model ]':20s}")
         tab_parent.add(tab10, text=f"{'[ Visualizations ]':20s}")
         tab_parent.add(tab11, text=f"{'[ Classifier validation ]':20s}")
-        tab_parent.add(tab12,text=f"{'[ Live Classification ]':20s}")
+        tab_parent.add(tab12,text=f"{'[ Add-ons ]':20s}")
 
         tab_parent.grid(row=0)
         tab_parent.enable_traversal()
@@ -3615,8 +3677,8 @@ class loadprojectini:
 
         #label Behavior
         label_labelaggression = LabelFrame(tab7,text='Label Behavior',font=("Helvetica",12,'bold'),pady=5,padx=5,fg='black')
-        button_labelaggression = Button(label_labelaggression, text='Select folder with frames (create new video annotation)',command= lambda:choose_folder(self.projectconfigini))
-        button_load_labelaggression = Button(label_labelaggression,text='Select folder with frames (continue existing video annotation)',command= lambda: load_folder(self.projectconfigini))
+        button_labelaggression = Button(label_labelaggression, text='Select video (create new video annotation)',command= lambda:choose_folder(self.projectconfigini))
+        button_load_labelaggression = Button(label_labelaggression,text='Select video (continue existing video annotation)',command= lambda: load_folder(self.projectconfigini))
 
         #third party annotation
         label_thirdpartyann = LabelFrame(tab7,text='Import Third-Party behavior labels',font=("Helvetica",12,'bold'),pady=5,padx=5,fg='black')
@@ -3626,7 +3688,7 @@ class loadprojectini:
 
         #pseudolabel
         label_pseudo = LabelFrame(tab7,text='Pseudo Labelling',font=("Helvetica",12,'bold'),pady=5,padx=5,fg='black')
-        pLabel_framedir = FolderSelect(label_pseudo,'Frame folder',lblwidth='10')
+        pLabel_framedir = FileSelect(label_pseudo,'Video Path',lblwidth='10')
         plabelframe_threshold = LabelFrame(label_pseudo,text='Threshold',pady=5,padx=5)
         plabel_threshold =[0]*len(targetlist)
         count=0
@@ -3634,7 +3696,7 @@ class loadprojectini:
             plabel_threshold[count] = Entry_Box(plabelframe_threshold,str(i),'20')
             plabel_threshold[count].grid(row=count+2,sticky=W)
             count+=1
-        pLabel_button = Button(label_pseudo,text='Correct label',command = lambda:semisuperviseLabel(self.projectconfigini,pLabel_framedir.folder_path,list(targetlist),plabel_threshold))
+        pLabel_button = Button(label_pseudo,text='Correct label',command = lambda:semisuperviseLabel(self.projectconfigini,pLabel_framedir.file_path,list(targetlist),plabel_threshold))
 
 
         #train machine model
@@ -3666,6 +3728,9 @@ class loadprojectini:
 
         #kleinberg smoothing
         kleinberg_button = Button(label_runmachinemodel,text='Kleinberg Smoothing',command = self.kleinbergMenu)
+
+        #FSTTC
+        fsttc_button = Button(label_runmachinemodel,text='FSTTC',command=self.fsttcmenu)
 
         # machine results
         label_machineresults = LabelFrame(tab9,text='Analyze Machine Results',font=("Helvetica",12,'bold'),padx=5,pady=5,fg='black')
@@ -3712,7 +3777,7 @@ class loadprojectini:
         label_plotall = LabelFrame(tab10,text='Visualizations',font=("Helvetica",12,'bold'),pady=5,padx=5,fg='black')
         #ganttplot
         label_ganttplot = LabelFrame(label_plotall,text='Gantt plot',pady=5,padx=5)
-        button_ganttplot = Button(label_ganttplot,text='Generate gantt plot',command=self.plotgantt)
+        button_ganttplot = Button(label_ganttplot,text='Generate gantt plot',command= lambda: ganntplot_config(self.projectconfigini))
 
         #dataplot
         label_dataplot = LabelFrame(label_plotall, text='Data plot', pady=5, padx=5)
@@ -3818,10 +3883,14 @@ class loadprojectini:
         self.cvTarget.setChoices(targetlist[(config.get('SML settings', 'target_name_' + str(1)))])
         button_validate_classifier = Button(label_classifier_validation,text='Validate',command =self.classifiervalidation)
 
-        ## Live classification
-        label_deeplabstream = LabelFrame(tab12, text='DeepLabStream', pady=5, padx=5,font=("Helvetica",12,'bold'),fg='black')
-        self.label_settingsini = FolderSelect(label_deeplabstream, 'Select DLS folder',title='Select DeepLabStream folder')
-        button_dlsconfirm = Button(label_deeplabstream,text='Confirm', command = self.DLSsettings)
+        # ## Live classification
+        # label_deeplabstream = LabelFrame(tab12, text='DeepLabStream', pady=5, padx=5,font=("Helvetica",12,'bold'),fg='black')
+        # self.label_settingsini = FolderSelect(label_deeplabstream, 'Select DLS folder',title='Select DeepLabStream folder')
+        # button_dlsconfirm = Button(label_deeplabstream,text='Confirm', command = self.DLSsettings)
+
+        #addons
+        lbl_addon = LabelFrame(tab12,text='SimBA Expansion',pady=5, padx=5,font=("Helvetica",12,'bold'),fg='black')
+        button_bel = Button(lbl_addon,text='Pup retrieval - Analysis Protocol 1',command = self.pupMenu)
 
         #organize
         label_import.grid(row=0,column=0,sticky=W,pady=5)
@@ -3920,7 +3989,8 @@ class loadprojectini:
         # self.shortest_bout.grid(row=2,column=0,sticky=W)
         # button_set_shortbout.grid(row=2,column=1,sticky=W)
         button_runmachinemodel.grid(row=1,sticky=W,pady=5)
-        kleinberg_button.grid(row=2,sticky=W,pady=5)
+        kleinberg_button.grid(row=2,sticky=W,pady=10)
+        fsttc_button.grid(row=3,sticky=W,pady=10)
 
         label_machineresults.grid(row=9,sticky=W,pady=5)
         button_process_datalog.grid(row=2,column=0,sticky=W,padx=3)
@@ -3997,9 +4067,121 @@ class loadprojectini:
         self.cvTarget.grid(row=1,sticky=W)
         button_validate_classifier.grid(row=2,sticky=W)
 
-        label_deeplabstream.grid(row=15,sticky=W)
-        self.label_settingsini.grid(row=0,sticky=W)
-        button_dlsconfirm.grid(row=1,pady=5)
+        lbl_addon.grid(row=15,sticky=W)
+        button_bel.grid(row=0,sticky=W)
+        # label_deeplabstream.grid(row=15,sticky=W)
+        # self.label_settingsini.grid(row=0,sticky=W)
+        # button_dlsconfirm.grid(row=1,pady=5)
+
+    def pupMenu(self):
+        #top lvl
+        puptoplvl = Toplevel()
+        puptoplvl.minsize(400,320)
+        puptoplvl.wm_title('Pup retrieval - Analysis Protocol 1')
+
+        #lblframe for input
+        lbl_pup = LabelFrame(puptoplvl,text='Pup retrieval - Analysis Protocol 1', pady=5, padx=5,font=("Helvetica",12,'bold'),fg='black')
+        prob_pup = Entry_Box(lbl_pup,'prob_pup','20')
+        prob_mom = Entry_Box(lbl_pup,'prob_mother','20')
+        dist_start = Entry_Box(lbl_pup, 'dist_start_crit', '20')
+        dist_crit = Entry_Box(lbl_pup, 'dist_crit', '20')
+        prob_crit_certain = Entry_Box(lbl_pup, 'prob_crit_certain', '20')
+        mm_deviation = Entry_Box(lbl_pup, 'mm_deviation', '20')
+        carry_frames_seconds = Entry_Box(lbl_pup, 'carry_frames_seconds', '20')
+        smooth_factor = Entry_Box(lbl_pup, 'smooth_factor', '20')
+        corenest_name = Entry_Box(lbl_pup, 'corenest_name', '20')
+        nest_name = Entry_Box(lbl_pup, 'nest_name', '20')
+        dam_name = Entry_Box(lbl_pup, 'dam_name', '20')
+        pup_name = Entry_Box(lbl_pup, 'pup_name', '20')
+        carry_classifier_name = Entry_Box(lbl_pup, 'carry_classifier_name', '20')
+        approach_classifier_name = Entry_Box(lbl_pup, 'approach_classifier_name', '20')
+        smooth_function = Entry_Box(lbl_pup, 'smooth_function', '20')
+
+        #button
+        button_run = Button(puptoplvl,text='RUN',font=("Helvetica",12,'bold'),fg='red',command=print('run'))
+
+        #organize
+        lbl_pup.grid(row=0,sticky=W)
+        prob_pup.grid(row=0,sticky=W)
+        prob_mom.grid(row=1,sticky=W)
+        dist_start.grid(row=2,sticky=W)
+        dist_crit.grid(row=3,sticky=W)
+        prob_crit_certain.grid(row=4,sticky=W)
+        mm_deviation.grid(row=5,sticky=W)
+        carry_frames_seconds.grid(row=5,sticky=W)
+        smooth_factor.grid(row=6,sticky=W)
+        corenest_name.grid(row=7,sticky=W)
+        nest_name.grid(row=8,sticky=W)
+        dam_name.grid(row=9,sticky=W)
+        pup_name.grid(row=10,sticky=W)
+        carry_classifier_name.grid(row=11,sticky=W)
+        approach_classifier_name.grid(row=12,sticky=W)
+        smooth_function.grid(row=13,sticky=W)
+
+        button_run.grid(row=1,padx=10,pady=10)
+
+    def fsttcmenu(self):
+        #get data
+        config = ConfigParser()
+        configFile = str(self.projectconfigini)
+        config.read(configFile)
+        # get current no of target
+        notarget = config.getint('SML settings', 'no_targets')
+        targetlist = [0] * notarget
+        varlist = [0] * notarget
+        for i in range(notarget):
+            varlist[i] = IntVar()
+            targetlist[i] = (config.get('SML settings', 'target_name_' + str(i + 1)))
+
+        #toplvl
+        fstoplvl = Toplevel()
+        fstoplvl.minsize(400,320)
+        fstoplvl.wm_title('Calculate forward-spike time tiling coefficents')
+
+        #git
+        lbl_git_fsttc = Label(fstoplvl, text='[Click here to learn about FSTTC]',cursor='hand2', fg='blue')
+        lbl_git_fsttc.bind('<Button-1>', lambda e: webbrowser.open_new('https://github.com/sgoldenlab/simba/blob/master/docs/FSTTC.md'))
+
+        #fsttc settings
+        lbl_fsttc_settings = LabelFrame(fstoplvl,text='FSTTC Settings', pady=5, padx=5,font=("Helvetica",12,'bold'),fg='black')
+        cvar = IntVar()
+        cr8_graph = Checkbutton(lbl_fsttc_settings,text='Create graph',variable=cvar)
+        time_delta = Entry_Box(lbl_fsttc_settings,'Time Delta','10')
+        lbl_behavior = LabelFrame(lbl_fsttc_settings,text="Behaviors")
+        #behaviors
+        behaviorlist = [0]*notarget
+        for i in range(len(targetlist)):
+            behaviorlist[i] = Checkbutton(lbl_behavior,text=str(targetlist[i]),variable=varlist[i])
+            behaviorlist[i].grid(row=str(i),sticky=W)
+
+        ftsccbutton = Button(fstoplvl,text='Calculate FSTTC',command=lambda:self.runfsttc(time_delta.entry_get,cvar.get(),targetlist,varlist))
+
+        #organize
+        lbl_git_fsttc.grid(row=0,sticky=W,pady=5)
+        lbl_fsttc_settings.grid(row=1,sticky=W)
+        cr8_graph.grid(row=0,sticky=W)
+        time_delta.grid(row=1,sticky=W,pady=5)
+        lbl_behavior.grid(row=2,sticky=W,pady=5)
+
+        ftsccbutton.grid(row=3,pady=10)
+
+    def runfsttc(self,timedelta,creategraph,targetlist,varlist):
+        if creategraph == 1:
+            creategraph = True
+        else:
+            creategraph = False
+
+        target = []
+
+        for i in range(len(varlist)):
+            if varlist[i].get()==1:
+                target.append(targetlist[i])
+
+        FSTCC_performer = FSTCC_perform(self.projectconfigini, timedelta, target, creategraph)
+        FSTCC_performer.calculate_sequence_data()
+        FSTCC_performer.calculate_FSTCC()
+        FSTCC_performer.save_results()
+        FSTCC_performer.plot_results()
 
     def kleinbergMenu(self):
         kleintoplvl = Toplevel()
@@ -4709,6 +4891,8 @@ class loadprojectini:
         self.secondMenu = LabelFrame(master,text="Choose bodyparts")
         self.p_threshold_a = Entry_Box(self.secondMenu,'Bp probability threshold','20')
         self.p_threshold_a.entry_set(0.0)
+        self.disvar = IntVar()
+        discheckbox = Checkbutton(self.secondMenu,text='Calculate distance moved within ROI',variable=self.disvar)
         runButton = Button(self.secondMenu,text=text,command =lambda:self.run_analyze_roi(noofanimal.get(), animalVarList, appendornot))
         animals2analyze = noofanimal.get()
         configini = self.projectconfigini
@@ -4726,6 +4910,7 @@ class loadprojectini:
         #organize
         self.secondMenu.grid(row=1, sticky=W)
         self.p_threshold_a.grid(row=3,sticky=W)
+        discheckbox.grid(row=4,sticky=W)
         runButton.grid(row=30,padx=10,pady=10)
         for animal in range(animals2analyze):
             labelFrameList[animal].grid(row=animal,column=0, sticky=W)
@@ -4790,8 +4975,12 @@ class loadprojectini:
         if appendornot == 'append':
             ROItoFeatures(configini)
         elif appendornot =='not append':
+            if self.disvar.get()==1:
+                caldist = True
+            else:
+                caldist = False
             config.set('ROI settings', 'probability_threshold', str(self.p_threshold_a.entry_get))
-            roiAnalysis(configini,'outlier_corrected_movement_location')
+            roiAnalysis(configini,'outlier_corrected_movement_location',caldist)
         elif appendornot == 'processmovement':
             ROI_process_movement(configini)
         elif appendornot == 'locationheatmap':
@@ -5029,8 +5218,6 @@ class loadprojectini:
         else:
             data_plot_config(self.projectconfigini, 'Centroid')
 
-    def plotgantt(self):
-        ganntplot_config(self.projectconfigini)
 
     def plotsklearn_result(self):
         configini = self.projectconfigini
@@ -5880,6 +6067,7 @@ class App(object):
         fpsMenu.add_command(label='Change fps for multiple videos',command=changefpsmulti)
         menu.add_cascade(label='Tools',menu=fifthMenu)
         fifthMenu.add_command(label='Clip videos',command=shorten_video)
+        fifthMenu.add_command(label='Clip video into multiple videos', command=multi_shorten_video)
         fifthMenu.add_command(label='Crop videos',command=crop_video)
         fifthMenu.add_command(label='Multi-crop',command=multicropmenu)
         fifthMenu.add_command(label='Downsample videos',command=video_downsample)
