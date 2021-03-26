@@ -37,8 +37,8 @@ simba
 
 >*Note:* If you installed SimBA on a virtual environment (anaconda), after installation, you may have to run run `conda install shapely` for SimBA to work.
 
-
 # Installing SimBA using Anaconda
+
 Click [here](/docs/anaconda_installation.md) for a detail step by step guide on how to install using anaconda.
 
 1. Open up terminal of your environment
@@ -55,6 +55,13 @@ Click [here](/docs/anaconda_installation.md) for a detail step by step guide on 
 
 `conda install -c conda-forge shapely`
 
+# Developer Installation
+
+1. clone the git repository
+2. `cd` to the cloned repository
+3. `pip install -e .`
+
+This will install the repository in an editable mode. See pip documentation for more.
 
 # Installing on MacOS
 
