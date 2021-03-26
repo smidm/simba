@@ -9,7 +9,7 @@ import operator
 from functools import reduce
 from configparser import ConfigParser, MissingSectionHeaderError, NoOptionError
 import errno
-import rw_dfs
+import simba.rw_dfs
 
 
 def importSLEAPbottomUP(inifile, dataFolder, currIDList):
@@ -146,7 +146,7 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
             frameCounter+=1
 
         dataDf.fillna(0, inplace=True)
-        rw_dfs.save_df(dataDf, wfileType, savePath)
+        simba.rw_dfs.save_df(dataDf, wfileType, savePath)
         csvPaths.append(savePath)
         print('Saved file ' + savePath)
 
@@ -172,7 +172,7 @@ def importSLEAPbottomUP(inifile, dataFolder, currIDList):
         indBpCordList, frameNumber, addSpacer, EuclidDistanceList, changeList = [], 0, 2, [], []
         ID_user_cords, currIDcounter = [], 0
         assigningIDs, completePromt, chooseFrame, assignBpCords = False, False, True, True
-        currDf = rw_dfs.read_df(csvFile, wfileType)
+        currDf = simba.rw_dfs.read_df(csvFile, wfileType)
         vidFname = os.path.join(videoFolder, os.path.basename(csvFile).replace('.csv', '.mp4'))
         vidBasename = os.path.basename(vidFname)
         if not os.path.exists(vidFname):
